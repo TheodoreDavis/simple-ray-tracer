@@ -14,7 +14,7 @@ class v3 {
         float operator[](int i) const;
         float& operator[](int i);
 
-        // Uniary
+        // Unary
         v3 operator+();
         v3 operator-();
 
@@ -34,6 +34,8 @@ class v3 {
         v3 operator/(const v3& rhs);
         v3 operator*(const float rhs);
         v3 operator/(const float rhs);
+
+        // Vector Operations
 
         // IO
         friend std::ostream& operator<<(std::ostream& out, const v3& rhs);
