@@ -1,0 +1,2 @@
+- 09/09/2021 -- 11:40pm
+	- sgriffen -- Added inc/cmpfloat.h and test/test-cmpfloat.cpp
