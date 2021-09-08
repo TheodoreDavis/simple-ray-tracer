@@ -124,3 +124,30 @@ std::ostream& operator<<(std::ostream& out, const v3& rhs) {
 std::istream& operator<<(std::istream& in, const v3& rhs) {
     //TODO
 }
+
+///////////////////////////////////////////////////////////////
+// IO
+///////////////////////////////////////////////////////////////
+
+v3 v3::crossProduct(const v3& rhs) {
+    return v3(v[1] * rhs.v[2] - v[2] * rhs.v[1],
+              v[2] * rhs.v[0] - v[0] * rhs.v[2],
+              v[0] * rhs.v[1] - v[1] * rhs.v[0]);
+}
+
+float v3::dotProduct(const v3& rhs) {
+    return v[0] * rhs.v[0] + v[1] * rhs.v[1] + v[2] * rhs.v[2];
+}
+
+float v3::magnitude() {
+    return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+}
+
+float v3::magnitudeSquared() {
+    return v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+}
+
+v3 v3::unitVector() {
+    float m = this->magnitude();
+    return v3(v[0] / m, v[1] / m, v[2] / m);
+}

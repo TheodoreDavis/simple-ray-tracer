@@ -10,19 +10,19 @@ int main() {
 
     a[0] = 5, a[1] = 5, a[2] = 5;
     cout << a[0] << a[1] << a[2];
-    cout << " -- Should be 555" << endl;
+    cout << " -- Should be 555" << endl << endl;
     a[0] = 1, a[1] = 2, a[2] = 3;
 
     // Test ostream
     cout << a;
-    cout << " -- Should be {1,2,3}" << endl;
+    cout << " -- Should be {1,2,3}" << endl << endl;
 
     // Test unary operators
     cout << +a;
     cout << " -- Should be {1,2,3}" << endl;
     
     cout << -a;
-    cout << " -- Should be {-1,-2,-3}" << endl;
+    cout << " -- Should be {-1,-2,-3}" << endl << endl;
 
     // Test assignments
     a += v3(1,1,1);
@@ -47,7 +47,7 @@ int main() {
 
     a /= 5;
     cout << a;
-    cout << " -- Should be {1,2,3}" << endl;
+    cout << " -- Should be {1,2,3}" << endl << endl;
 
     // Operations
     cout << a + v3(1,1,1);
@@ -66,5 +66,25 @@ int main() {
     cout << " -- Should be {5,10,15}" << endl;
 
     cout << a / 5;
-    cout << " -- Should be {0.2,0.4,0.6}" << endl;
+    cout << " -- Should be {0.2,0.4,0.6}" << endl << endl;
+
+    // Vector Operations
+
+    v3 b = v3(7,8,9);
+
+    cout << a.crossProduct(b);
+    cout << " -- Should be {-6,12,-6}" << endl;
+
+    cout << a.dotProduct(b);
+    cout << " -- Should be 50" << endl;
+
+    cout << a.magnitude();
+    cout << " -- Should be 3.7417" << endl;
+
+    cout << a.magnitudeSquared();
+    cout << " -- Should be 14" << endl;
+
+    cout << a.unitVector();
+    cout <<  " -- Should be {0.27,0.53,0.80}" << endl << endl;
+
 }

@@ -35,9 +35,21 @@ class v3 {
         v3 operator*(const float rhs);
         v3 operator/(const float rhs);
 
-        // Vector Operations
+        //comparisons
+
 
         // IO
         friend std::ostream& operator<<(std::ostream& out, const v3& rhs);
         friend std::istream& operator<<(std::istream& in, const v3& rhs);
+
+        // Vector Operations
+        v3 crossProduct(const v3& rhs); // https://www.mathsisfun.com/algebra/vectors-cross-product.html
+        float dotProduct(const v3& rhs); // https://www.mathsisfun.com/algebra/vectors-dot-product.html
+        float magnitude();
+        float magnitudeSquared();
+        v3 unitVector();
+        v3& normalize(); //TODO? convert *this to a unit vector
+
+        // math
+        friend float sqrt(float x);
 };
