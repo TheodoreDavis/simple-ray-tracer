@@ -27,20 +27,26 @@ class v3 {
         v3& operator*=(const float rhs);
         v3& operator/=(const float rhs);
 
-        //operations
+        // Operations
         v3 operator+(const v3& rhs);
         v3 operator-(const v3& rhs);
         v3 operator*(const v3& rhs);
         v3 operator/(const v3& rhs);
         v3 operator*(const float rhs);
         v3 operator/(const float rhs);
+        friend v3 operator*(const float lhs, const v3& rhs);
 
-        //comparisons
-
+        // Comparisons
+        bool operator==(const v3& rhs);
+        bool operator!=(const v3& rhs);
+        bool operator>=(const v3& rhs); // Following comparisons look at magnitude
+        bool operator<=(const v3& rhs); // Redundant code to speed up calculation times
+        bool operator>(const v3& rhs);
+        bool operator<(const v3& rhs);
 
         // IO
         friend std::ostream& operator<<(std::ostream& out, const v3& rhs);
-        friend std::istream& operator<<(std::istream& in, const v3& rhs);
+        friend std::istream& operator>>(std::istream& in, const v3& rhs);
 
         // Vector Operations
         v3 crossProduct(const v3& rhs); // https://www.mathsisfun.com/algebra/vectors-cross-product.html

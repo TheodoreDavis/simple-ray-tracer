@@ -112,6 +112,42 @@ v3 v3::operator/(const float rhs) {
     return v3(v[0] / rhs, v[1] / rhs, v[2] / rhs);
 }
 
+v3 operator*(const float lhs, const v3& rhs) {
+    return v3(rhs.v[0] * lhs, rhs.v[1] * lhs, rhs.v[2] * lhs);
+}
+
+///////////////////////////////////////////////////////////////
+// Comparisons
+///////////////////////////////////////////////////////////////
+
+bool v3::operator==(const v3& rhs) {
+    return (v[0] == rhs.v[0] && v[1] == rhs.v[1] && v[2] == rhs.v[2]);
+}
+
+bool v3::operator!=(const v3& rhs) {
+    return (v[0] != rhs.v[0] || v[1] != rhs.v[1] || v[2] != rhs.v[2]);
+}
+
+bool v3::operator>=(const v3& rhs) {
+    return (v[0] * v[0] + v[1] * v[1] + v[2] * v[2] >=
+            rhs.v[0] * rhs.v[0] + rhs.v[1] * rhs.v[1] + rhs.v[2] * rhs.v[2]);
+}
+
+bool v3::operator<=(const v3& rhs) {
+    return (v[0] * v[0] + v[1] * v[1] + v[2] * v[2] <=
+            rhs.v[0] * rhs.v[0] + rhs.v[1] * rhs.v[1] + rhs.v[2] * rhs.v[2]);
+}
+
+bool v3::operator>(const v3& rhs) {
+    return (v[0] * v[0] + v[1] * v[1] + v[2] * v[2] >
+            rhs.v[0] * rhs.v[0] + rhs.v[1] * rhs.v[1] + rhs.v[2] * rhs.v[2]);
+}
+
+bool v3::operator<(const v3& rhs) {
+    return (v[0] * v[0] + v[1] * v[1] + v[2] * v[2] <
+            rhs.v[0] * rhs.v[0] + rhs.v[1] * rhs.v[1] + rhs.v[2] * rhs.v[2]);
+}
+
 ///////////////////////////////////////////////////////////////
 // IO
 ///////////////////////////////////////////////////////////////
@@ -126,7 +162,7 @@ std::istream& operator<<(std::istream& in, const v3& rhs) {
 }
 
 ///////////////////////////////////////////////////////////////
-// IO
+// Vector Operations
 ///////////////////////////////////////////////////////////////
 
 v3 v3::crossProduct(const v3& rhs) {
