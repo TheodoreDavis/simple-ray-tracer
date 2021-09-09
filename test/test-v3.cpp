@@ -5,6 +5,7 @@ int main() {
     v3 a = v3(1,2,3);
 
     // Test Accessers
+    cout << "Testing Accessors" << endl;
     cout << a[0] << a[1] << a[2];
     cout << " -- Should be 123" << endl;
 
@@ -14,10 +15,12 @@ int main() {
     a[0] = 1, a[1] = 2, a[2] = 3;
 
     // Test ostream
+    cout << "Testing ostream" << endl;
     cout << a;
     cout << " -- Should be {1,2,3}" << endl << endl;
 
     // Test unary operators
+    cout << "Testing Unary Operators" << endl;
     cout << +a;
     cout << " -- Should be {1,2,3}" << endl;
     
@@ -25,6 +28,7 @@ int main() {
     cout << " -- Should be {-1,-2,-3}" << endl << endl;
 
     // Test assignments
+    cout << "Testing Assignments" << endl;
     a += v3(1,1,1);
     cout << a;
     cout << " -- Should be {2,3,4}" << endl;
@@ -50,11 +54,12 @@ int main() {
     cout << " -- Should be {1,2,3}" << endl << endl;
 
     // Operations
+    cout << "Testing Operations" << endl;
     cout << a + v3(1,1,1);
     cout << " -- Should be {2,3,4}" << endl;
 
     cout << a - v3(1,2,1);
-    cout << " -- Should be {0,0,3}" << endl;
+    cout << " -- Should be {0,0,2}" << endl;
 
     cout << a * v3(1,2,4);
     cout << " -- Should be {1,4,12}" << endl;
@@ -69,6 +74,7 @@ int main() {
     cout << " -- Should be {0.2,0.4,0.6}" << endl << endl;
 
     // Vector Operations
+    cout << "Testing Vector Operations" << endl;
 
     v3 b = v3(7,8,9);
 

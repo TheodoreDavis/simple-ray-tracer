@@ -1,3 +1,5 @@
+!.gitkeep
+
 # Prerequisites
 *.d
 
@@ -41,3 +43,5 @@
 # Auto generated folders
 obj/
 bin/
+release/
+out/

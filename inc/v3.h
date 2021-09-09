@@ -1,3 +1,7 @@
+#ifndef _v3_
+#define _v3_
+
+#include <inc/cmpfloat.h>
 #include <iostream>
 #include <cmath>
 
@@ -8,11 +12,26 @@ class v3 {
     
     public:
         // Constructors
+        v3() {}
         v3(float x, float y, float z) {v[0]=x, v[1]=y, v[2]=z;}
+        v3(const v3& rhs) {v[0]=rhs.v[0], v[1]=rhs.v[1], v[2]=rhs.v[2];}
 
         // Accessors
         float operator[](int i) const;
         float& operator[](int i);
+        float x() const;
+        float& x();
+        float y() const;
+        float& y();
+        float z() const;
+        float& z();
+        float r() const;
+        float& r();
+        float g() const;
+        float& g();
+        float b() const;
+        float& b();
+
 
         // Unary
         v3 operator+();
@@ -49,13 +68,16 @@ class v3 {
         friend std::istream& operator>>(std::istream& in, const v3& rhs);
 
         // Vector Operations
-        v3 crossProduct(const v3& rhs); // https://www.mathsisfun.com/algebra/vectors-cross-product.html
-        float dotProduct(const v3& rhs); // https://www.mathsisfun.com/algebra/vectors-dot-product.html
-        float magnitude();
-        float magnitudeSquared();
-        v3 unitVector();
+        v3 const crossProduct(const v3& rhs); // https://www.mathsisfun.com/algebra/vectors-cross-product.html
+        float const dotProduct(const v3& rhs); // https://www.mathsisfun.com/algebra/vectors-dot-product.html
+        float const magnitude();
+        float const magnitudeSquared();
+        float const distance(const v3& rhs);
+        float const distanceSquared(const v3& rhs);
+        v3 const unitVector();
         v3& normalize(); //TODO? convert *this to a unit vector
 
         // math
         friend float sqrt(float x);
 };
+#endif
