@@ -1,2 +1,5 @@
+- 09/10/2021 -- 1:45 am
+	- sgriffen -- Updated inc/cmpfloat.h to use cpp epsilon
+	- Cleaned test/test-cmpfloat.cpp
 - 09/09/2021 -- 11:45pm
 	- sgriffen -- Added inc/cmpfloat.h and test/test-cmpfloat.cpp
