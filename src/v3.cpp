@@ -157,9 +157,9 @@ std::ostream& operator<<(std::ostream& out, const v3& rhs) {
     return out;
 }
 
-std::istream& operator<<(std::istream& in, const v3& rhs) {
-    //TODO
-}
+//std::istream& operator<<(std::istream& in, const v3& rhs) {
+//    //TODO
+//}
 
 ///////////////////////////////////////////////////////////////
 // Vector Operations

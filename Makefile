@@ -5,15 +5,21 @@ endif
 
 SUBDIRS = obj bin # Auto generated directories
 
-all: test-v3
+CFLAGS 	= -Wall -Werror -g3
+CC		= g++
+
+all: test-v3 test-cmpfloat
 
 .PHONY: all clean subdirs $(SUBDIRS)
 
 test-v3: test/test-v3.cpp obj/v3.o
-	g++ -o bin/$@ -I. $^
+	$(CC) $(CFLAGS) -o bin/$@ -I. $^
+	
+test-cmpfloat: inc/cmpfloat.h test/test-cmpfloat.cpp
+	$(CC) $(CFLAGS) -o bin/$@ -I. $^
 
 obj/v3.o: inc/v3.h src/v3.cpp subdirs
-	g++ -c -o $@ -I. src/v3.cpp
+	$(CC) $(CFLAGS) -c -o $@ -I. src/v3.cpp
 
 subdirs: $(SUBDIRS)
 
