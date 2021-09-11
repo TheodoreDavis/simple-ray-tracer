@@ -13,15 +13,15 @@ class triangle : public shape {
 		/*
 			constructors
 		*/
-		triangle(const v3 &a, const v3 &b, const v3 &c) {
+		triangle(v3 a, v3 b, v3 c) {
 			this->a_ = a;
 			this->b_ = b;
 			this->c_ = c;
-			this->color_ = v3(1.0, 0.4, 0.4);  //pastel red
+			this->color_ = v3(1.0f, 0.4f, 0.4f);  //pastel red
 			
 			norm_ = ((v3)b - (v3)a).crossProduct((v3)c - (v3)a);
 		}
-		triangle(const v3 &a, const v3 &b, const v3 &c, const v3 &color) {
+		triangle(v3 a,v3 b, v3 c, v3 color) {
 			this->a_ = a;
 			this->b_ = b;
 			this->c_ = c;
@@ -32,7 +32,7 @@ class triangle : public shape {
 		/*
 			utility functions
 		*/
-		const v3 get_bary(const v3 &p);
+		const v3 get_bary(v3 p);
 		/*
 			implementation of shape virtual functions
 		*/
