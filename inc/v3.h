@@ -1,3 +1,4 @@
+#include <inc/cmpfloat.h>
 #include <iostream>
 #include <cmath>
 

@@ -121,30 +121,34 @@ v3 operator*(const float lhs, const v3& rhs) {
 ///////////////////////////////////////////////////////////////
 
 bool v3::operator==(const v3& rhs) {
-    return (v[0] == rhs.v[0] && v[1] == rhs.v[1] && v[2] == rhs.v[2]);
+    return (CMPFLOAT_EQUAL(v[0], rhs.v[0]) &&
+            CMPFLOAT_EQUAL(v[1], rhs.v[1]) &&
+            CMPFLOAT_EQUAL(v[2], rhs.v[2]));
 }
 
 bool v3::operator!=(const v3& rhs) {
-    return (v[0] != rhs.v[0] || v[1] != rhs.v[1] || v[2] != rhs.v[2]);
+    return (CMPFLOAT_NEQUAL(v[0], rhs.v[0]) ||
+            CMPFLOAT_NEQUAL(v[1], rhs.v[1]) ||
+            CMPFLOAT_NEQUAL(v[2], rhs.v[2]));
 }
 
 bool v3::operator>=(const v3& rhs) {
-    return (v[0] * v[0] + v[1] * v[1] + v[2] * v[2] >=
+    return CMPFLOAT_EGREATER(v[0] * v[0] + v[1] * v[1] + v[2] * v[2],
             rhs.v[0] * rhs.v[0] + rhs.v[1] * rhs.v[1] + rhs.v[2] * rhs.v[2]);
 }
 
 bool v3::operator<=(const v3& rhs) {
-    return (v[0] * v[0] + v[1] * v[1] + v[2] * v[2] <=
+    return CMPFLOAT_ELESS(v[0] * v[0] + v[1] * v[1] + v[2] * v[2],
             rhs.v[0] * rhs.v[0] + rhs.v[1] * rhs.v[1] + rhs.v[2] * rhs.v[2]);
 }
 
 bool v3::operator>(const v3& rhs) {
-    return (v[0] * v[0] + v[1] * v[1] + v[2] * v[2] >
+    return CMPFLOAT_GREATER(v[0] * v[0] + v[1] * v[1] + v[2] * v[2],
             rhs.v[0] * rhs.v[0] + rhs.v[1] * rhs.v[1] + rhs.v[2] * rhs.v[2]);
 }
 
 bool v3::operator<(const v3& rhs) {
-    return (v[0] * v[0] + v[1] * v[1] + v[2] * v[2] <
+    return CMPFLOAT_LESS(v[0] * v[0] + v[1] * v[1] + v[2] * v[2],
             rhs.v[0] * rhs.v[0] + rhs.v[1] * rhs.v[1] + rhs.v[2] * rhs.v[2]);
 }
 

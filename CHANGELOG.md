@@ -3,3 +3,5 @@
 	- Cleaned test/test-cmpfloat.cpp
 - 09/09/2021 -- 11:45pm
 	- sgriffen -- Added inc/cmpfloat.h and test/test-cmpfloat.cpp
+- 09/12/2021 -- 3:30pm
+	- tcdavis -- Updated inc/cmpfloat.h to use !(<) for >= and updated src/v3.cpp to use cmpfloat
