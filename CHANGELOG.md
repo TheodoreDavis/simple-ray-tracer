@@ -1,4 +1,8 @@
-9/12/2021 -- 4:10pm
+- 09/13/2021 -- 7:45pm
+	- sgriffen -- 
+		- Adding inc/image.h src/image.cpp and test/test-image.cpp. Adds utility function to write 2d rgb array to ppm file
+		- Updating Makefile to compile image function
+- 09/12/2021 -- 4:10pm
 	- sgriffen -- Minor tweaks to inc/cmpfloat.h so that macros are formatted similarly
 - 09/12/2021 -- 3:30pm
 	- tcdavis -- Updated inc/cmpfloat.h to use !(<) for >= and updated src/v3.cpp to use cmpfloat
