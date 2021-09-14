@@ -54,4 +54,4 @@ clean:
 	echo cleaning!
 	rm -rf obj/
 	rm -rf bin/
-	rm -rf out/
+	rm -rf out/*
