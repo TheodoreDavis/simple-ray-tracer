@@ -1,3 +1,9 @@
+- 09/14/2021 -- 1:30pm
+	- sgriffen --
+		- Updating image_write_rgb to take in a 2d array of vectors instead of a 2d array of uint32 tuples
+		- Updating test-image accordingly
+			- Issue while trying to make test-image, image_write_rgb not found for some reason...
+		- Adding include guards to inc/image.h, inc/cmpfloat.h
 - 09/13/2021 -- 7:45pm
 	- sgriffen -- 
 		- Adding inc/image.h src/image.cpp and test/test-image.cpp. Adds utility function to write 2d rgb array to ppm file

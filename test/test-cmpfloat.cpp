@@ -1,6 +1,7 @@
-#include <inc/cmpfloat.h>
 #include <iostream>
 #include <string>
+
+#include <inc/cmpfloat.h>
 
 void print_result(float a, float b, bool result, std::string str_result);
 

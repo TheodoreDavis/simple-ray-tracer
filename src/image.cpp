@@ -1,6 +1,7 @@
 #include <inc/image.h>
+#include <inc/v3.h>
 
-int image_write_rgb(std::string filename, uint32_t(**img)[3], uint32_t img_width, uint32_t img_height, uint32_t img_maxval) {
+int image_write_rgb(std::string filename, v3 **img, uint32_t img_height, uint32_t img_width, uint8_t img_maxval) {
 	
 	uint32_t i, j;
 	
@@ -34,9 +35,9 @@ int image_write_rgb(std::string filename, uint32_t(**img)[3], uint32_t img_width
 	*/
 	for (i = 0; i < img_height; i++) {
 		for (j = 0; j < img_width; j++) {
-			uint32_t r = img[i][j][0];
-			uint32_t g = img[i][j][1];
-			uint32_t b = img[i][j][2];
+			uint8_t r = (uint8_t)(img[i][j].r() * img_maxval);
+			uint8_t g = (uint8_t)(img[i][j].g() * img_maxval);
+			uint8_t b = (uint8_t)(img[i][j].b() * img_maxval);
 			//fout.write((char *)&r, sizeof(char));
 			//fout.write((char *)&g, sizeof(char));
 			//fout.write((char *)&b, sizeof(char));

@@ -26,7 +26,7 @@ test-v3: test/test-v3.cpp obj/v3.o
 test-cmpfloat: inc/cmpfloat.h test/test-cmpfloat.cpp
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
 	
-test-image: test/test-image.cpp obj/image.o
+test-image: test/test-image.cpp obj/image.o obj/v3.o
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
 
 test-sphere: test/test-sphere.cpp obj/sphere.o obj/v3.o

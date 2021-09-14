@@ -1,3 +1,6 @@
+#ifndef _cmpfloat_
+#define _cmpfloat_
+
 #include <limits>
 #include <cmath>
 
@@ -8,3 +11,5 @@
 #define CMPFLOAT_LESS(a, b) ((a - b) < (0 - std::numeric_limits<float>::epsilon()))
 #define CMPFLOAT_EGREATER(a, b) (!(CMPFLOAT_LESS(a, b)))
 #define CMPFLOAT_ELESS(a, b) (!(CMPFLOAT_GREATER(a, b)))
+
+#endif

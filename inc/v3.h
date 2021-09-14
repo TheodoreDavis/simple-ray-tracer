@@ -14,7 +14,6 @@ class v3 {
         // Constructors
         v3() {}
         v3(float x, float y, float z) {v[0]=x, v[1]=y, v[2]=z;}
-        v3(float r, float g, float b) {v[0]=r, v[1]=g, v[2]=b;}
         v3(const v3& rhs) {v[0]=rhs.v[0], v[1]=rhs.v[1], v[2]=rhs.v[2];}
 
         // Accessors
