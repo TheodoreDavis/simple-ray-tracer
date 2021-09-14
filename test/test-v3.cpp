@@ -59,7 +59,7 @@ int main() {
     cout << " -- Should be {2,3,4}" << endl;
 
     cout << a - v3(1,2,1);
-    cout << " -- Should be {0,0,3}" << endl;
+    cout << " -- Should be {0,0,2}" << endl;
 
     cout << a * v3(1,2,4);
     cout << " -- Should be {1,4,12}" << endl;
