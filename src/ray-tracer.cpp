@@ -1,4 +1,5 @@
 #include <inc/sphere.h>
+#include <inc/image.h>
 #include <iostream>
 #include <vector>
 
@@ -25,7 +26,7 @@ int main(int argc, char *argv[]) {
     // Image data
     int height = 400, width = 533;
     float unitHeight = 1.5, unitWidth = 2;
-    v3 image[width][height];
+    v3 image[height][width];
 
     for(int y = 0; y < height; y++) {
         for(int x = 0; x < width; x++) {
@@ -36,13 +37,15 @@ int main(int argc, char *argv[]) {
             //     //TODO check if more than 1 shape has an intersection
 
             // }
-            if(s.rayIntersections(origin, dir) > 0)
+            if(s.rayIntersections(origin, dir) > 0) {
                 image[x][y] = s.getColor();
-            else
+            } else {
                 image[x][y] = backgroundColor;
+            }
         }
     }
 
     
+    image_write_rgb("output", image, width, height);
 
 }
