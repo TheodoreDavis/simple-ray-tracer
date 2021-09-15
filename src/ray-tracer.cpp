@@ -1,5 +1,6 @@
 #include <inc/sphere.h>
 #include <inc/image.h>
+
 #include <iostream>
 #include <vector>
 
@@ -21,15 +22,18 @@ int main(int argc, char *argv[]) {
     //Add shapes into our space
     //std::vector<shape> shapes;
     //shapes.push_back(sphere(v3(0,0,2), 1.0));
-    sphere s = sphere(v3(0,0,2), 1.0);
+    sphere s = sphere(v3(0,0,2), 1.0); // Change sphere location here!
 
     // Image data
-    int height = 400, width = 533;
+    uint32_t height = 300, width = 400;
     float unitHeight = 1.5, unitWidth = 2;
-    v3 image[height][width];
+    v3 **image = new v3*[height];
+    
 
-    for(int y = 0; y < height; y++) {
-        for(int x = 0; x < width; x++) {
+    for(uint32_t y = 0; y < height; y++) {
+        image[y] = new v3[width];
+
+        for(uint32_t x = 0; x < width; x++) {
             v3 dir = v3(plane.x() - unitWidth / 2 + unitWidth * (x + 1) / width,
                         plane.y() + unitHeight / 2 - unitHeight * (y + 1) / height,
                         plane.z() - origin.z());
@@ -38,14 +42,23 @@ int main(int argc, char *argv[]) {
 
             // }
             if(s.rayIntersections(origin, dir) > 0) {
-                image[x][y] = s.getColor();
+                image[y][x] = s.getColor();
             } else {
-                image[x][y] = backgroundColor;
+                image[y][x] = backgroundColor;
             }
         }
     }
+    //////////////////////////////////////////////////////////////////////
+    // TODO: Sean swap me out for your function!!!
+    std::cout << "P3 " << width << " " << height << " " << 256 << std::endl;
 
-    
-    image_write_rgb("output", image, width, height);
-
+    for(uint32_t y = 0; y < height; y++) {
+        for(uint32_t x = 0; x < width; x++) {
+            std::cout << (int)(image[y][x].r() * 255) << " ";
+            std::cout << (int)(image[y][x].g() * 255) << " ";
+            std::cout << (int)(image[y][x].b() * 255) << " ";
+        }
+        std::cout << std::endl;
+    }
+    //////////////////////////////////////////////////////////////////////
 }
