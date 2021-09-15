@@ -1,3 +1,6 @@
+- 09/15/2021 -- 11:40pm
+	- sgriffen --
+		- Added begginnings of a triangle class
 - 09/15/2021 -- 11:30am
 	- sgriffen --
 		- Fixed image_write_rbg problems
