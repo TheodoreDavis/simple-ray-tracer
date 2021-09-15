@@ -17,12 +17,12 @@ int main(int argc, char *argv[]) {
     // View plane of pixels
     v3 plane = v3(0,0,1);
 
-    v3 backgroundColor = v3(0.824,0.824,0.824);
+    v3 backgroundColor = v3(0.724,0.724,0.724);
 
     //Add shapes into our space
     //std::vector<shape> shapes;
     //shapes.push_back(sphere(v3(0,0,2), 1.0));
-    sphere s = sphere(v3(0,0,2), 1.0); // Change sphere location here!
+    sphere s = sphere(v3(0,0,4), 1.0); // Change sphere location here!
 
     // Image data
     uint32_t height = 300, width = 400;
@@ -48,17 +48,8 @@ int main(int argc, char *argv[]) {
             }
         }
     }
-    //////////////////////////////////////////////////////////////////////
-    // TODO: Sean swap me out for your function!!!
-    std::cout << "P3 " << width << " " << height << " " << 256 << std::endl;
-
-    for(uint32_t y = 0; y < height; y++) {
-        for(uint32_t x = 0; x < width; x++) {
-            std::cout << (int)(image[y][x].r() * 255) << " ";
-            std::cout << (int)(image[y][x].g() * 255) << " ";
-            std::cout << (int)(image[y][x].b() * 255) << " ";
-        }
-        std::cout << std::endl;
-    }
-    //////////////////////////////////////////////////////////////////////
+	
+	image_write_rgb("./out/img", image, height, width);
+	
+	return 0;
 }

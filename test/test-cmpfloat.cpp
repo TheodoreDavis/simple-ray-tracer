@@ -5,7 +5,7 @@
 
 void print_result(float a, float b, bool result, std::string str_result);
 
-int main() {
+int main(int argc, char *argv[]) {
 
 	float a = 5.0f;
 	float b = 5.0f;

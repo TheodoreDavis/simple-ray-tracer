@@ -5,9 +5,10 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include <inc/image.h>
+#include "../inc/v3.h"
+#include "../inc/image.h"
 
-int main() {
+int main(int argc, char *argv[]) {
 	
 	uint32_t i, j;
 	
@@ -20,7 +21,7 @@ int main() {
 	}
 	
 	for (i = 0; i < img_height; i++) {
-		for (j = 0; j < img_width; j++) { img[i][j] = v3(1.0f, 0.0f, 1.0f); }
+		for (j = 0; j < img_width; j++) { img[i][j] = v3(0.5, 0.25, 0.75); }
 	}
 	
 	mkdir("out", 0777);

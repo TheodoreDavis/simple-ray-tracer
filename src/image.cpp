@@ -1,5 +1,10 @@
-#include <inc/image.h>
-#include <inc/v3.h>
+#include <cstdint>
+#include <string>
+#include <iostream>
+#include <fstream>
+
+#include "../inc/v3.h"
+#include "../inc/image.h"
 
 int image_write_rgb(std::string filename, v3 **img, uint32_t img_height, uint32_t img_width, uint8_t img_maxval) {
 	
@@ -26,9 +31,7 @@ int image_write_rgb(std::string filename, v3 **img, uint32_t img_height, uint32_
 	/*
 		write correct header to file
 	*/
-	fout << "P3" << std::endl;
-	fout << img_width << " " << img_height << std::endl;
-	fout << img_maxval << std::endl;
+	fout << "P6\n" << std::to_string(img_width) << "\n" << std::to_string(img_height) << "\n" << std::to_string(img_maxval) << std::endl;
 	
 	/*
 		write image to file
@@ -41,11 +44,9 @@ int image_write_rgb(std::string filename, v3 **img, uint32_t img_height, uint32_
 			//fout.write((char *)&r, sizeof(char));
 			//fout.write((char *)&g, sizeof(char));
 			//fout.write((char *)&b, sizeof(char));
-			fout << r << " ";
-			fout << g << " ";
-			fout << b << " ";
+			fout << r << g << b;
 		}
-		fout << std::endl;
+		//fout << std::endl;
 	}
 	
 	fout.close();

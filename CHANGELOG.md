@@ -1,3 +1,7 @@
+- 09/15/2021 -- 11:30am
+	- sgriffen --
+		- Fixed image_write_rbg problems
+		- Replaced temporary image write in ray-tracer.cpp with image_write_rgb()
 - 09/14/2021 -- 8:20pm
 	- tcdavis --
 		- Changed static image 2d array to dynamic array
@@ -13,11 +17,15 @@
 		- Adding inc/image.h src/image.cpp and test/test-image.cpp. Adds utility function to write 2d rgb array to ppm file
 		- Updating Makefile to compile image function
 - 09/12/2021 -- 4:10pm
-	- sgriffen -- Minor tweaks to inc/cmpfloat.h so that macros are formatted similarly
+	- sgriffen -- 
+		- Minor tweaks to inc/cmpfloat.h so that macros are formatted similarly
 - 09/12/2021 -- 3:30pm
-	- tcdavis -- Updated inc/cmpfloat.h to use !(<) for >= and updated src/v3.cpp to use cmpfloat
+	- tcdavis -- 
+		- Updated inc/cmpfloat.h to use !(<) for >= and updated src/v3.cpp to use cmpfloat
 - 09/10/2021 -- 1:45 am
-	- sgriffen -- Updated inc/cmpfloat.h to use cpp epsilon
-	- Cleaned test/test-cmpfloat.cpp
+	- sgriffen -- 
+		- Updated inc/cmpfloat.h to use cpp epsilon
+		- Cleaned test/test-cmpfloat.cpp
 - 09/09/2021 -- 11:45pm
-	- sgriffen -- Added inc/cmpfloat.h and test/test-cmpfloat.cpp
+	- sgriffen -- 
+		- Added inc/cmpfloat.h and test/test-cmpfloat.cpp
