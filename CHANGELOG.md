@@ -1,3 +1,7 @@
+- 09/14/2021 -- 8:20pm
+	- tcdavis --
+		- Changed static image 2d array to dynamic array
+		- Added temp section to print ppm data to stdout to check result
 - 09/14/2021 -- 1:30pm
 	- sgriffen --
 		- Updating image_write_rgb to take in a 2d array of vectors instead of a 2d array of uint32 tuples

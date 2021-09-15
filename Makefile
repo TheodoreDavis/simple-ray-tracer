@@ -12,9 +12,9 @@ all: test release debug
 
 test: test-v3 test-cmpfloat test-sphere test-image
 
-release: src/ray-tracer.cpp obj/v3.o obj/sphere.o
+release: src/ray-tracer.cpp obj/v3.o obj/sphere.o obj/image.o
 	mkdir -p release
-	$(CC) $(CFLAGS) -o release/ray-tracer -I. $^
+	$(CC) -Wall -Werror -o release/ray-tracer -I. $^
 
 debug:
 
@@ -54,4 +54,6 @@ clean:
 	echo cleaning!
 	rm -rf obj/
 	rm -rf bin/
+	rm -rf release/
+	rm -rf debug/
 	rm -rf out/*
