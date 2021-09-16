@@ -1,3 +1,30 @@
+- 09/20/2021 -- 1:00 am
+	- sgriffen --
+		- Added ray class to wrap origin and direction vectors
+			- Has method to evaluate at time t
+		- Updated triangle class 
+			- Now uses material class
+			- Updated implemented shape methods
+			- Updated to use ray class
+		- Updated shape class with relevant changes
+		- Updated sphere class with relevant changes
+		- Added green triangle to demo application
+		- Removing memory leaks from demo application
+- 09/19/2021 -- 6:00pm
+	- tcdavis --
+		- Added shapeList class
+		- refactored shape class
+		- added material class
+		- refactored sphere class
+		- refactored ray-tracer.cpp
+- 09/18/2021 -- 4:25pm
+	- sgriffen --
+		- Fixing math issues in triangle.cpp (now works)
+		- Updating test cases in test-triangle.cpp
+		- Adding triangle to template scene in ray-tracer.cpp
+- 09/15/2021 -- 11:40pm
+	- sgriffen --
+		- Added begginnings of a triangle class
 - 09/15/2021 -- 11:30am
 	- sgriffen --
 		- Fixed image_write_rbg problems

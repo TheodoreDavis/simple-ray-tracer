@@ -47,13 +47,13 @@ class v3 {
         v3& operator/=(const float rhs);
 
         // Operations
-        v3 operator+(const v3& rhs);
-        v3 operator-(const v3& rhs);
-        v3 operator*(const v3& rhs);
-        v3 operator/(const v3& rhs);
-        v3 operator*(const float rhs);
-        v3 operator/(const float rhs);
-        friend v3 operator*(const float lhs, const v3& rhs);
+        v3 const operator+(const v3& rhs);
+        v3 const operator-(const v3& rhs);
+        v3 const operator*(const v3& rhs);
+        v3 const operator/(const v3& rhs);
+        v3 const operator*(const float rhs);
+        v3 const operator/(const float rhs);
+        friend v3 const operator*(const float lhs, const v3& rhs);
 
         // Comparisons
         bool operator==(const v3& rhs);

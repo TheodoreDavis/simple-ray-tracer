@@ -136,31 +136,31 @@ v3& v3::operator/=(const float rhs) {
 // Operations
 ///////////////////////////////////////////////////////////////
 
-v3 v3::operator+(const v3& rhs) {
+v3 const v3::operator+(const v3& rhs) {
     return v3(v[0] + rhs.v[0], v[1] + rhs.v[1], v[2] + rhs.v[2]);
 }
 
-v3 v3::operator-(const v3& rhs) {
+v3 const v3::operator-(const v3& rhs) {
     return v3(v[0] - rhs.v[0], v[1] - rhs.v[1], v[2] - rhs.v[2]);
 }
 
-v3 v3::operator*(const v3& rhs) {
+v3 const v3::operator*(const v3& rhs) {
     return v3(v[0] * rhs.v[0], v[1] * rhs.v[1], v[2] * rhs.v[2]);
 }
 
-v3 v3::operator/(const v3& rhs) {
+v3 const v3::operator/(const v3& rhs) {
     return v3(v[0] / rhs.v[0], v[1] / rhs.v[1], v[2] / rhs.v[2]);
 }
 
-v3 v3::operator*(const float rhs) {
+v3 const v3::operator*(const float rhs) {
     return v3(v[0] * rhs, v[1] * rhs, v[2] * rhs);
 }
 
-v3 v3::operator/(const float rhs) {
+v3 const v3::operator/(const float rhs) {
     return v3(v[0] / rhs, v[1] / rhs, v[2] / rhs);
 }
 
-v3 operator*(const float lhs, const v3& rhs) {
+v3 const operator*(const float lhs, const v3& rhs) {
     return v3(rhs.v[0] * lhs, rhs.v[1] * lhs, rhs.v[2] * lhs);
 }
 
@@ -251,6 +251,7 @@ v3 const v3::unitVector() {
     float m = this->magnitude();
     return v3(v[0] / m, v[1] / m, v[2] / m);
 }
+
 v3& v3::normalize() {
     float m = this->magnitude();
     v[0] /= m;
