@@ -53,15 +53,6 @@ v3 const sphere::rayIntersectionPoint(const v3& ori, const v3& dir) {
 }
 
 v3 const sphere::intersectionNormal(const v3& point) {
-    
-    // Probably don't need
-    float x = point.x() - center_.x();
-    float y = point.y() - center_.y();
-    float z = point.z() - center_.z();
-    if(CMPFLOAT_NEQUAL(x*x + y*y + z*z, radius_*radius_))
-        return v3(0,0,0); //error
-
     v3 p = point;
-    return (p - center_);
-
+    return (p - center_).unitVector();
 }
