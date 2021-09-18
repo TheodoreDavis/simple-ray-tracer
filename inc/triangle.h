@@ -19,7 +19,7 @@ class triangle : public shape {
 			this->c_ = c;
 			this->color_ = v3(1.0f, 0.4f, 0.4f);  //pastel red
 			
-			norm_ = ((v3)b - (v3)a).crossProduct((v3)c - (v3)a);
+			norm_ = (b - a).crossProduct(c - a);
 		}
 		triangle(v3 a,v3 b, v3 c, v3 color) {
 			this->a_ = a;
@@ -27,7 +27,7 @@ class triangle : public shape {
 			this->c_ = c;
 			this->color_ = color;
 			
-			norm_ = ((v3)b - (v3)a).crossProduct((v3)c - (v3)a);
+			norm_ = (b - a).crossProduct(c - a);
 		}
 		/*
 			utility functions
