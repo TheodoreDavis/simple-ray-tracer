@@ -1,3 +1,8 @@
+- 09/18/2021 -- 4:25pm
+	- sgriffen --
+		- Fixing math issues in triangle.cpp (now works)
+		- Updating test cases in test-triangle.cpp
+		- Adding triangle to template scene in ray-tracer.cpp
 - 09/15/2021 -- 11:40pm
 	- sgriffen --
 		- Added begginnings of a triangle class
