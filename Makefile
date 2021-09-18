@@ -12,7 +12,7 @@ all: test release debug
 
 test: test-v3 test-cmpfloat test-sphere test-image
 
-release: src/ray-tracer.cpp obj/v3.o obj/sphere.o obj/image.o
+release: src/ray-tracer.cpp obj/v3.o obj/sphere.o obj/triangle.o obj/image.o
 	mkdir -p release
 	$(CC) -Wall -Werror -o release/ray-tracer -I. $^
 	echo made release/ray-tracer

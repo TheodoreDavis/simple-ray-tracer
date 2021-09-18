@@ -1,4 +1,5 @@
 #include <inc/sphere.h>
+#include <inc/triangle.h>
 #include <inc/image.h>
 
 #include <iostream>
@@ -23,13 +24,13 @@ int main(int argc, char *argv[]) {
     //std::vector<shape> shapes;
     //shapes.push_back(sphere(v3(0,0,2), 1.0));
     sphere s = sphere(v3(0,0,4), 1.0); // Change sphere location here!
+	triangle t = triangle(v3(-0.5f,-0.5f,3.0f), v3(-0.5f,0.0f,3.0f), v3(0.0f,-0.5f,3.0f)); // Change triangle location here!
 
     // Image data
     uint32_t height = 300, width = 400;
     float unitHeight = 1.5, unitWidth = 2;
     v3 **image = new v3*[height];
     
-
     for(uint32_t y = 0; y < height; y++) {
         image[y] = new v3[width];
 
@@ -37,19 +38,16 @@ int main(int argc, char *argv[]) {
             v3 dir = v3(plane.x() - unitWidth / 2 + unitWidth * (x + 1) / width,
                         plane.y() + unitHeight / 2 - unitHeight * (y + 1) / height,
                         plane.z() - origin.z());
-            // for(auto s : shapes) {
-            //     //TODO check if more than 1 shape has an intersection
-
-            // }
-            if(s.rayIntersections(origin, dir) > 0) {
-                image[y][x] = s.getColor();
-            } else {
-                image[y][x] = backgroundColor;
-            }
+						
+			if(t.rayIntersections(origin, dir) > 0) 		{ image[y][x] = t.getColor(); } 
+			else if (s.rayIntersections(origin, dir) > 0)	{ image[y][x] = s.getColor(); } 
+			else 											{ image[y][x] = backgroundColor; }
         }
     }
 	
-	image_write_rgb("./out/img", image, height, width);
+	image_write_rgb("./out/output", image, height, width);
+	
+	delete image;
 	
 	return 0;
 }
