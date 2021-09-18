@@ -29,6 +29,12 @@ class triangle : public shape {
 			
 			norm_ = (b - a).crossProduct(c - a);
 		}
+		
+		/*
+			i/o functions
+		*/
+		friend std::ostream& operator<<(std::ostream& out, const triangle &rhs);
+		
 		/*
 			utility functions
 		*/

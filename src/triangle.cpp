@@ -1,5 +1,11 @@
 #include <inc/triangle.h>
 
+std::ostream& operator<<(std::ostream& out, const triangle &rhs) {
+	
+    out << "{a=" << rhs.a_ << "], b=" << rhs.b_ << ", c=" << rhs.c_ << ", norm=" << rhs.norm_;
+	return out;
+}
+
 const v3 triangle::get_bary(v3 p) {
 	
 	float norm2_r = 1/norm_.dotProduct(norm_);
@@ -32,9 +38,9 @@ const v3 triangle::rayIntersectionPoint(const v3& ori, const v3& dir) {
 	v3 o = ori;
 	v3 d = dir;
 	
-	float dot_dn = d.dotProduct(norm_);
-	if (CMPFLOAT_EQUAL(dot_dn, 0.0f)) { return ori; } //ray is parallel to triangle plane, so intersection not possible
-	float t = a_.dotProduct(norm_) / dot_dn; //ray parmaeter to get the point where the ray intersects the plane
+	float dot_nd = norm_.dotProduct(d);
+	if (CMPFLOAT_EQUAL(dot_nd, 0.0f)) { return ori; } //ray is parallel to triangle plane, so intersection not possible
+	float t = (a_ - o).dotProduct(norm_) / dot_nd; //ray parmaeter to get the point where the ray intersects the plane
 	
 	return o + (t * d);
 }
