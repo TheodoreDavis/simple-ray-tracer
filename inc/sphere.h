@@ -12,17 +12,15 @@ class sphere : public shape {
         sphere(v3 center, float radius) {
             center_ = center;
             radius_ = radius;
-            color_ = v3(0.392, 0.584, 0.929);
+            material_ = material(v3(0.392, 0.584, 0.929));
         }
 
-        sphere(v3 center, float radius, v3 color) {
+        sphere(v3 center, float radius, material material) {
             center_ = center;
             radius_ = radius;
-            color_ = color;
+            material_ = material;
         }
 
-        int const rayIntersections(const v3& ori, const v3& dir);
-        v3 const rayIntersectionPoint(const v3& ori, const v3& dir);
-        v3 const intersectionNormal(const v3& point);
+        bool const rayIntersections(const v3& ori, const v3& dir, hitRecord& rec);
 };
 #endif

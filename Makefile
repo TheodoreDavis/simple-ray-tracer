@@ -12,11 +12,13 @@ all: test release debug
 
 test: test-v3 test-cmpfloat test-sphere test-image
 
-release: src/ray-tracer.cpp obj/v3.o obj/sphere.o obj/image.o
+release: src/ray-tracer.cpp obj/v3.o obj/sphere.o obj/image.o obj/shapelist.o
 	mkdir -p release
 	$(CC) -Wall -Werror -o release/ray-tracer -I. $^
 
-debug:
+debug: src/ray-tracer.cpp obj/v3.o obj/sphere.o obj/image.o obj/shapelist.o
+	mkdir -p debug
+	$(CC) $(CFLAGS) -o debug/ray-tracer -I. $^
 
 .PHONY: all clean subdirs $(SUBDIRS)
 
@@ -44,6 +46,9 @@ obj/image.o: inc/image.h src/image.cpp subdirs
 
 obj/sphere.o: inc/shape.h inc/sphere.h src/sphere.cpp subdirs
 	$(CC) $(CFLAGS) -c -o $@ -I. src/sphere.cpp
+
+obj/shapelist.o: inc/shape.h inc/shapelist.h src/shapelist.cpp subdirs
+	$(CC) $(CFLAGS) -c -o $@ -I. src/shapelist.cpp
 
 subdirs: $(SUBDIRS)
 

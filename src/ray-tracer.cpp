@@ -1,8 +1,11 @@
 #include <inc/sphere.h>
+#include <inc/shapeList.h>
 #include <inc/image.h>
+#include <inc/hitRecord.h>
 
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 int main(int argc, char *argv[]) {
     // TODO if need user imput
@@ -25,7 +28,9 @@ int main(int argc, char *argv[]) {
     //Add shapes into our space
     //std::vector<shape> shapes;
     //shapes.push_back(sphere(v3(0,0,2), 1.0));
-    sphere s = sphere(v3(0,0,4), 1.0); // Change sphere location here!
+    shapelist shapes = shapelist();
+    shapes.add(new sphere(v3(0,0,4), 2.0));
+    shapes.add(new sphere(v3(.5,0,2.5), 1.0, material(v3(0.7,0.0,0.0))));
 
     // Image data
     uint32_t height = 300, width = 400;
@@ -37,18 +42,17 @@ int main(int argc, char *argv[]) {
         image[y] = new v3[width];
         for(uint32_t x = 0; x < width; x++) {
             // Grab dir for the pixel
+            hitRecord rec;
             v3 dir = v3(plane.x() - unitWidth / 2 + unitWidth * (x + 1) / width,
                         plane.y() + unitHeight / 2 - unitHeight * (y + 1) / height,
-                        plane.z() - origin.z());
-            if(s.rayIntersections(origin, dir) > 0) {
-                v3 p = s.rayIntersectionPoint(origin, dir);
-                v3 r = pLight - p;
-                v3 n = s.intersectionNormal(p);
+                        plane.z() - origin.z()).unitVector();
 
-                float theta = acos(r.dotProduct(n) / r.magnitude());
+            if(shapes.intersectionAtRay(origin, dir, rec)) {
+                v3 r = pLight - rec.point();
+                float theta = acos(r.dotProduct(rec.normal()) / r.magnitude());
                 float intensity = (M_PI - theta) * M_1_PI;
 
-                image[y][x] = intensity * s.getColor();
+                image[y][x] = intensity * rec.getMaterial().color();
             } else {
                 image[y][x] = backgroundColor;
             }
