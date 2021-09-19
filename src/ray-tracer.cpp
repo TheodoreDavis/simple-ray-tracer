@@ -1,4 +1,5 @@
 #include <inc/sphere.h>
+#include <inc/triangle.h>
 #include <inc/shapeList.h>
 #include <inc/image.h>
 #include <inc/hitRecord.h>
@@ -29,6 +30,7 @@ int main(int argc, char *argv[]) {
     //std::vector<shape> shapes;
     //shapes.push_back(sphere(v3(0,0,2), 1.0));
     shapelist shapes = shapelist();
+    triangle t = triangle(v3(-0.5f,-0.5f,3.0f), v3(-0.5f,0.0f,3.0f), v3(0.0f,-0.5f,3.0f));
     shapes.add(new sphere(v3(0,0,4), 2.0));
     shapes.add(new sphere(v3(.5,0,2.5), 1.0, material(v3(0.7,0.0,0.0))));
 
@@ -61,5 +63,7 @@ int main(int argc, char *argv[]) {
 	
 	image_write_rgb("./out/output", image, height, width);
 	
+    delete image;
+
 	return 0;
 }

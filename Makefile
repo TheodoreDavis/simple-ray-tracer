@@ -10,7 +10,7 @@ CC		= g++
 
 all: test release debug
 
-test: test-v3 test-cmpfloat test-sphere test-image
+test: test-v3 test-cmpfloat test-sphere test-image test-triangle
 
 release: src/ray-tracer.cpp obj/v3.o obj/sphere.o obj/image.o obj/shapelist.o
 	mkdir -p release
@@ -34,6 +34,10 @@ test-image: test/test-image.cpp obj/image.o obj/v3.o
 test-sphere: test/test-sphere.cpp obj/sphere.o obj/v3.o
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
 
+test-triangle: test/test-triangle.cpp obj/triangle.o obj/v3.o
+	$(CC) $(CFLAGS) -o bin/$@ -I. $^
+	echo made bin/test-triangle
+
 #####################################################################
 # Source Files
 #####################################################################
@@ -46,6 +50,9 @@ obj/image.o: inc/image.h src/image.cpp subdirs
 
 obj/sphere.o: inc/shape.h inc/sphere.h src/sphere.cpp subdirs
 	$(CC) $(CFLAGS) -c -o $@ -I. src/sphere.cpp
+	
+obj/triangle.o: inc/shape.h inc/triangle.h src/triangle.cpp subdirs
+	$(CC) $(CFLAGS) -c -o $@ -I. src/triangle.cpp
 
 obj/shapelist.o: inc/shape.h inc/shapelist.h src/shapelist.cpp subdirs
 	$(CC) $(CFLAGS) -c -o $@ -I. src/shapelist.cpp
