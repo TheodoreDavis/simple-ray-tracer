@@ -30,9 +30,9 @@ int main(int argc, char *argv[]) {
     //std::vector<shape> shapes;
     //shapes.push_back(sphere(v3(0,0,2), 1.0));
     shapelist shapes = shapelist();
-    triangle t = triangle(v3(-0.5f,-0.5f,3.0f), v3(-0.5f,0.0f,3.0f), v3(0.0f,-0.5f,3.0f));
     shapes.add(new sphere(v3(0,0,4), 2.0));
     shapes.add(new sphere(v3(.5,0,2.5), 1.0, material(v3(0.7,0.0,0.0))));
+    shapes.add(new triangle(v3(-0.5f,-0.5f,3.0f), v3(-0.5f,0.0f,3.0f), v3(0.0f,-0.5f,3.0f)));
 
     // Image data
     uint32_t height = 300, width = 400;
