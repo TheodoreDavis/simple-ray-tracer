@@ -1,11 +1,12 @@
 #include <inc/sphere.h>
 
-bool const sphere::rayIntersections(const v3& ori, const v3& dir, hitRecord& rec) {
-    v3 o = ori, d = dir;
-    v3 temp = o - center_;
+bool const sphere::rayIntersections(const ray &casted, hitRecord& rec) {
+	
+	ray r = casted;
+    v3 temp = r.ori() - center_;
     
     //find a,b,c for quadratic -- a is always 1 since dir is a unit vector
-    float b = 2 * d.dotProduct(temp);
+    float b = 2 * r.dir().dotProduct(temp);
     float c = temp.magnitudeSquared() - radius_ * radius_;
     float res = b * b - 4 * c;
     
@@ -24,7 +25,7 @@ bool const sphere::rayIntersections(const v3& ori, const v3& dir, hitRecord& rec
         rec.t() = CMPFLOAT_LESS(abs(t1), abs(t2)) ? t1 : t2;
     }
 
-    rec.point() = o + rec.t() * d;
+    rec.point() = r.ori() + rec.t() * r.dir();
     rec.getMaterial() = material_;
 
     rec.normal() = rec.point() - center_;

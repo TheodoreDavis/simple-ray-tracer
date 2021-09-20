@@ -21,6 +21,6 @@ class sphere : public shape {
             material_ = material;
         }
 
-        bool const rayIntersections(const v3& ori, const v3& dir, hitRecord& rec);
+        bool const rayIntersections(const ray &casted, hitRecord& rec);
 };
 #endif

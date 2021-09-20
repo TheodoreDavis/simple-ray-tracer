@@ -4,7 +4,7 @@
 #ifndef _SHAPE_
 #define _SHAPE_
 
-#include <inc/v3.h>
+#include <inc/ray.h>
 #include <inc/material.h>
 #include <inc/hitRecord.h>
 #include <inc/cmpfloat.h>
@@ -14,20 +14,18 @@ class shape {
         material material_;
 
     public:
-        shape() {}
+        shape() {  }
 
         material getMaterial() const {return material_;}
         material& getMaterial() {return material_;}
 
         /** 
          * Returns the number of intersections that a ray casted 
-         * from ori with direction dir has with this object.
-         * @param ori A point in 3 dimensional space.
-         * @param dir A unit vector of a direction.
+         * from a point-origin with direction has with this object.
+         * @param ray A ray with a point in 3 dimensional space and a direction.
          * @return The number of intersections.
          */
-        virtual bool const rayIntersections(const v3& ori, const v3& dir, hitRecord& rec) = 0;
-
+        virtual bool const rayIntersections(const ray &casted, hitRecord& rec) = 0;
 };
 
 #endif

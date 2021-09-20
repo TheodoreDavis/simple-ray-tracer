@@ -10,33 +10,39 @@ CC		= g++
 
 all: test release debug
 
-test: test-v3 test-cmpfloat test-sphere test-image test-triangle
+test: test-v3 test-cmpfloat test-image test-sphere test-triangle
 
-release: src/ray-tracer.cpp obj/v3.o obj/sphere.o obj/image.o obj/shapelist.o
+release: src/ray-tracer.cpp obj/v3.o obj/ray.o obj/sphere.o obj/triangle.o obj/image.o obj/shapelist.o
 	mkdir -p release
 	$(CC) -Wall -Werror -o release/ray-tracer -I. $^
+	echo done -- made release/ray-tracer.cpp
 
-debug: src/ray-tracer.cpp obj/v3.o obj/sphere.o obj/image.o obj/shapelist.o
+debug: src/ray-tracer.cpp obj/v3.o obj/ray.o obj/sphere.o obj/triangle.o obj/image.o obj/shapelist.o
 	mkdir -p debug
 	$(CC) $(CFLAGS) -o debug/ray-tracer -I. $^
+	echo done -- made debug/ray-tracer.cpp
 
 .PHONY: all clean subdirs $(SUBDIRS)
 
 test-v3: test/test-v3.cpp obj/v3.o
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
+	echo done -- made bin/test-v3
 	
 test-cmpfloat: inc/cmpfloat.h test/test-cmpfloat.cpp
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
+	echo done -- made bin/test-cmpfloat
 	
 test-image: test/test-image.cpp obj/image.o obj/v3.o
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
+	echo done -- made bin/test-image
 
-test-sphere: test/test-sphere.cpp obj/sphere.o obj/v3.o
+test-sphere: test/test-sphere.cpp obj/sphere.o obj/ray.o obj/v3.o
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
+	echo done -- made bin/test-sphere
 
-test-triangle: test/test-triangle.cpp obj/triangle.o obj/v3.o
+test-triangle: test/test-triangle.cpp obj/triangle.o obj/ray.o obj/v3.o
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
-	echo made bin/test-triangle
+	echo done -- made bin/test-triangle
 
 #####################################################################
 # Source Files
@@ -44,6 +50,9 @@ test-triangle: test/test-triangle.cpp obj/triangle.o obj/v3.o
 
 obj/v3.o: inc/v3.h src/v3.cpp subdirs
 	$(CC) $(CFLAGS) -c -o $@ -I. src/v3.cpp
+	
+obj/ray.o: inc/ray.h src/ray.cpp subdirs
+	$(CC) $(CFLAGS) -c -o $@ -I. src/ray.cpp
 	
 obj/image.o: inc/image.h src/image.cpp subdirs
 	$(CC) $(CFLAGS) -c -o $@ -I. src/image.cpp
@@ -63,9 +72,9 @@ $(SUBDIRS):
 	mkdir -p $@
 
 clean:
-	echo cleaning!
 	rm -rf obj/
 	rm -rf bin/
 	rm -rf release/
 	rm -rf debug/
 	rm -rf out/*
+	echo done -- cleaned!

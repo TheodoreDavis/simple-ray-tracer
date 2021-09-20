@@ -30,16 +30,15 @@ int main(int argc, char *argv[]) {
     //std::vector<shape> shapes;
     //shapes.push_back(sphere(v3(0,0,2), 1.0));
     shapelist shapes = shapelist();
+	shapes.add(new triangle(v3(-0.25f,-0.25f,0.5f), v3(-0.0f,-0.25f,0.5f), v3(-0.0f,0.0f,0.5f), material(v3(0.0,255.0,0.0))));
     shapes.add(new sphere(v3(0,0,4), 2.0));
     shapes.add(new sphere(v3(.5,0,2.5), 1.0, material(v3(0.7,0.0,0.0))));
-    shapes.add(new triangle(v3(-0.5f,-0.5f,3.0f), v3(-0.5f,0.0f,3.0f), v3(0.0f,-0.5f,3.0f)));
 
     // Image data
     uint32_t height = 300, width = 400;
     float unitHeight = 1.5, unitWidth = 2;
     v3 **image = new v3*[height];
-    
-
+	
     for(uint32_t y = 0; y < height; y++) {
         image[y] = new v3[width];
         for(uint32_t x = 0; x < width; x++) {
@@ -48,8 +47,8 @@ int main(int argc, char *argv[]) {
             v3 dir = v3(plane.x() - unitWidth / 2 + unitWidth * (x + 1) / width,
                         plane.y() + unitHeight / 2 - unitHeight * (y + 1) / height,
                         plane.z() - origin.z()).unitVector();
-
-            if(shapes.intersectionAtRay(origin, dir, rec)) {
+			
+            if(shapes.intersectionAtRay(ray(origin, dir), rec)) {
                 v3 r = pLight - rec.point();
                 float theta = acos(r.dotProduct(rec.normal()) / r.magnitude());
                 float intensity = (M_PI - theta) * M_1_PI;

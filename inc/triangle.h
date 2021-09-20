@@ -17,17 +17,17 @@ class triangle : public shape {
 			this->a_ = a;
 			this->b_ = b;
 			this->c_ = c;
-			this->color_ = v3(1.0f, 0.4f, 0.4f);  //pastel red
+			this->material_ = material(v3(1.0f, 0.4f, 0.4f));  //color is pastel red
 			
-			norm_ = (b - a).crossProduct(c - a);
+			this->norm_ = ((v3)(b - a)).crossProduct(c - a);
 		}
-		triangle(v3 a,v3 b, v3 c, v3 color) {
+		triangle(v3 a, v3 b, v3 c, material mat) {
 			this->a_ = a;
 			this->b_ = b;
 			this->c_ = c;
-			this->color_ = color;
+			this->material_ = mat;
 			
-			norm_ = (b - a).crossProduct(c - a);
+			this->norm_ = ((v3)(b - a)).crossProduct(c - a);
 		}
 		
 		/*
@@ -42,9 +42,7 @@ class triangle : public shape {
 		/*
 			implementation of shape virtual functions
 		*/
-		const int rayIntersections(const v3& ori, const v3& dir);
-		const v3 rayIntersectionPoint(const v3& ori, const v3& dir);
-		const v3 intersectionNormal(const v3& point);
+		const bool rayIntersections(const ray &casted, hitRecord& rec);
 };
 
 #endif
