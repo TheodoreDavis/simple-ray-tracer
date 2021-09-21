@@ -62,7 +62,8 @@ int main(int argc, char *argv[]) {
 	
 	image_write_rgb("./out/output", image, height, width);
 	
-    delete image;
+	for(uint32_t y = 0; y < height; y++) { delete[] image[y]; }
+    delete[] image;
 
 	return 0;
 }
