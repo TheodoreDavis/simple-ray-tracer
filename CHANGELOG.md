@@ -1,3 +1,15 @@
+- 09/20/2021 -- 1:00 am
+	- sgriffen --
+		- Added ray class to wrap origin and direction vectors
+			- Has method to evaluate at time t
+		- Updated triangle class 
+			- Now uses material class
+			- Updated implemented shape methods
+			- Updated to use ray class
+		- Updated shape class with relevant changes
+		- Updated sphere class with relevant changes
+		- Added green triangle to demo application
+		- Removing memory leaks from demo application
 - 09/19/2021 -- 6:00pm
 	- tcdavis --
 		- Added shapeList class
