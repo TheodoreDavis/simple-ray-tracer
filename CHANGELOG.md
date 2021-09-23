@@ -1,3 +1,10 @@
+- 09/19/2021 -- 6:00pm
+	- tcdavis --
+		- Added shapeList class
+		- refactored shape class
+		- added material class
+		- refactored sphere class
+		- refactored ray-tracer.cpp
 - 09/18/2021 -- 4:25pm
 	- sgriffen --
 		- Fixing math issues in triangle.cpp (now works)
