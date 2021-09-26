@@ -1,3 +1,6 @@
+- 09/24/2021 -- 8:25 pm
+	- sgriffen --
+		- Adding intensity member variable to ray and appropritate accessors
 - 09/20/2021 -- 1:00 am
 	- sgriffen --
 		- Added ray class to wrap origin and direction vectors
