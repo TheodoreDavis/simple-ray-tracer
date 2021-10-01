@@ -1,3 +1,16 @@
+- 09/30/2021 -- 7:00 pm
+	- tcdavis --
+		- Removed Material.cpp
+		- Changed material to Material
+		- Fixed typo in ray.h
+		- Refacted all references to material to Material
+		- Made shapeList function const
+		- Made the v3 vector operations const
+		- Fixed issue inside shapeList.cpp where ray was insecting at or behind the origin
+		- Added << to sphere
+		- Added recursion to the ray tracer
+		- Encapsulated the get color methods of the ray tracer
+		- Changed background color to a #define
 - 09/24/2021 -- 8:25 pm
 	- sgriffen --
 		- Adding intensity member variable to ray and appropritate accessors
