@@ -1,30 +1,30 @@
 #ifndef _HITRECORD_
 #define _HITRECORD_
 
-#include <inc/v3.h>
-#include <inc/material.h>
+#include <inc/V3.h>
+#include <inc/Material.h>
 
 
 /**
  * Class to cotain information about a hittable after checking if a ray has it one
  */
-class hitRecord {
+class HitRecord {
     private:
         float t_;
-        v3 point_;
-        v3 normal_;
+        V3 point_;
+        V3 normal_;
         Material material_;
     public:
-        hitRecord() {}
+        HitRecord() {}
         
-        hitRecord(float t, const v3& point, const v3& normal) {
+        HitRecord(float t, const V3& point, const V3& normal) {
             t_ = t;
             point_ = point;
             normal_ = normal;
             material_ = Material();
         }
         
-        hitRecord(float t, const v3& point, const v3& normal, const Material& material) {
+        HitRecord(float t, const V3& point, const V3& normal, const Material& material) {
             t_ = t;
             point_ = point;
             normal_ = normal;
@@ -34,16 +34,16 @@ class hitRecord {
         float t() const {return t_;}
         float& t() {return t_;}
 
-        v3 point() const {return point_;}
-        v3& point() {return point_;}
+        V3 point() const {return point_;}
+        V3& point() {return point_;}
 
-        v3 normal() const {return normal_;}
-        v3& normal() {return normal_;}
+        V3 normal() const {return normal_;}
+        V3& normal() {return normal_;}
 
         Material getMaterial() const {return material_;}
         Material& getMaterial() {return material_;}
 
-        hitRecord& operator=(hitRecord rhs) {
+        HitRecord& operator=(HitRecord rhs) {
             t_ = rhs.t_;
             point_ = rhs.point_;
             normal_ = rhs.normal_;

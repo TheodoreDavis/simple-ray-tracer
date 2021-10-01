@@ -1,10 +1,7 @@
 #ifndef _MATERIAL_
 #define _MATERIAL_
 
-#include <inc/v3.h>
-//#include <inc/ray.h>
-//#include <inc/shapeList.h>
-//#include <inc/cmpfloat.h>
+#include <inc/V3.h>
 
 /**
  * Class for holding light and color information of a shape
@@ -24,7 +21,7 @@ class Material {
         /**
          * The base color of this shape
          */
-        v3 color_;
+        V3 color_;
 
     public:
         Material() {
@@ -33,10 +30,10 @@ class Material {
             glass_ = 0;
             absorb_ = 0.25;
             indexOfReflection_ = 0;
-            color_ = v3(0.7,0.7,0);
+            color_ = V3(0.7,0.7,0);
         }
         
-        Material(v3 color) {
+        Material(V3 color) {
             specular_ = 0;
             diffuse_ = 0;
             glass_ = 0;
@@ -51,10 +48,10 @@ class Material {
             glass_ = 0;
             absorb_ = 1.0-specular;
             indexOfReflection_ = 0;
-            color_ = v3(0.7,0.7,0);
+            color_ = V3(0.7,0.7,0);
         }
 
-        Material(float specular, v3 color) {
+        Material(float specular, V3 color) {
             specular_ = specular;
             diffuse_ = 0;
             glass_ = 0;
@@ -63,7 +60,7 @@ class Material {
             color_ = color;
         }
 
-        Material(float specular, float diffuse, float glass, float absorb, float index, v3 color) {
+        Material(float specular, float diffuse, float glass, float absorb, float index, V3 color) {
             specular_ = specular;
             diffuse_ = diffuse;
             glass_ = glass;
@@ -83,7 +80,7 @@ class Material {
         float& absorb() {return absorb_;}
         float indexOfReflection() const {return indexOfReflection_;}
         float& indexOfReflection() {return indexOfReflection_;}
-        v3 color() const {return color_;}
-        v3& color() {return color_;}
+        V3 color() const {return color_;}
+        V3& color() {return color_;}
 };
 #endif

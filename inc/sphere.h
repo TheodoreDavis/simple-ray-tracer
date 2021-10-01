@@ -1,28 +1,28 @@
 #ifndef _SPHERE_
 #define _SPHERE_
 
-#include <inc/shape.h>
+#include <inc/Shape.h>
 
-class sphere : public shape {
+class Sphere : public Shape {
     private:
-        v3 center_;
+        V3 center_;
         float radius_;
 
     public:
-        sphere(v3 center, float radius) {
+        Sphere(V3 center, float radius) {
             center_ = center;
             radius_ = radius;
-            material_ = Material(v3(0.392, 0.584, 0.929));
+            material_ = Material(V3(0.392, 0.584, 0.929));
         }
 
-        sphere(v3 center, float radius, Material material) {
+        Sphere(V3 center, float radius, Material material) {
             center_ = center;
             radius_ = radius;
             material_ = material;
         }
 
-        friend std::ostream& operator<<(std::ostream& out, const sphere& rhs);
+        friend std::ostream& operator<<(std::ostream& out, const Sphere& rhs);
 
-        bool const rayIntersections(const ray &casted, hitRecord& rec);
+        bool const rayIntersections(const Ray &casted, HitRecord& rec);
 };
 #endif

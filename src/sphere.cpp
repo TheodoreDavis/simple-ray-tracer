@@ -1,6 +1,6 @@
-#include <inc/sphere.h>
+#include <inc/Sphere.h>
 
-std::ostream& operator<<(std::ostream& out, const sphere &rhs) {
+std::ostream& operator<<(std::ostream& out, const Sphere &rhs) {
 	
     out << "center={" << rhs.center_.x() <<
         ", " << rhs.center_.y() <<
@@ -9,10 +9,10 @@ std::ostream& operator<<(std::ostream& out, const sphere &rhs) {
 	return out;
 }
 
-bool const sphere::rayIntersections(const ray &casted, hitRecord& rec) {
+bool const Sphere::rayIntersections(const Ray &casted, HitRecord& rec) {
 	
-	ray r = casted;
-    v3 temp = r.ori() - center_;
+	Ray r = casted;
+    V3 temp = r.ori() - center_;
     
     //find a,b,c for quadratic -- a is always 1 since dir is a unit vector
     float b = 2 * r.dir().dotProduct(temp);
@@ -39,7 +39,6 @@ bool const sphere::rayIntersections(const ray &casted, hitRecord& rec) {
 
     rec.normal() = rec.point() - center_;
     rec.normal().normalize();
-    //rec.normal() += rec.point(); // Not sure if this normal needs to be rebased
 
     return true;
 }

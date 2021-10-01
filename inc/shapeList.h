@@ -1,22 +1,22 @@
 #ifndef _SHAPELIST_
 #define _SHAPELIST_
 
-#include <inc/shape.h>
-#include <inc/v3.h>
-#include <inc/hitRecord.h>
+#include <inc/Shape.h>
+#include <inc/V3.h>
+#include <inc/HitRecord.h>
 #include <inc/cmpfloat.h>
 #include <vector>
 #include <memory>
 
-class shapelist {
+class Shapelist {
     private:
-        std::vector<std::unique_ptr<shape>> shapes_;
+        std::vector<std::unique_ptr<Shape>> shapes_;
     public:
-        shapelist() {}
+        Shapelist() {}
 
-        void add(shape* newShape);
+        void add(Shape* newShape);
 
-        bool intersectionAtRay(const ray &casted, hitRecord& rec)  const;
+        bool intersectionAtRay(const Ray &casted, HitRecord& rec)  const;
 };
 
 #endif

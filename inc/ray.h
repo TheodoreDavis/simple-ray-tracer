@@ -1,25 +1,25 @@
 #ifndef _RAY_
 #define _RAY_
 
-#include <inc/v3.h>
+#include <inc/V3.h>
 
-class ray {
+class Ray {
 	private:
-		v3 origin_;
-		v3 direction_;
+		V3 origin_;
+		V3 direction_;
 		float intensity_;
 	public:
 		/*
 			constructors
 		*/
-		ray() {  }
-		ray(v3 origin, v3 direction) {
+		Ray() {  }
+		Ray(V3 origin, V3 direction) {
 
 			this->origin_ = origin;
 			this->direction_ = direction;
 			this->intensity_ = 0.0f;
 		}
-		ray(v3 origin, v3 direction, float intensity) {
+		Ray(V3 origin, V3 direction, float intensity) {
 
 			this->origin_ = origin;
 			this->direction_ = direction;
@@ -30,22 +30,22 @@ class ray {
 		/*
 			accessors
 		*/
-		v3 ori() const { return this->origin_; }
-		v3& ori() { return this->origin_; }
-		v3 dir() const { return this->direction_; }
-		v3& dir() { return this->direction_; }
+		V3 ori() const { return this->origin_; }
+		V3& ori() { return this->origin_; }
+		V3 dir() const { return this->direction_; }
+		V3& dir() { return this->direction_; }
 		float intensity() const { return this->intensity_; }
 		float& intensity() { return this->intensity_; }
 
 		/*
 			i/o functions
 		*/
-		friend std::ostream& operator<<(std::ostream& out, const ray &rhs);
+		friend std::ostream& operator<<(std::ostream& out, const Ray &rhs);
 
 		/*
 			utility functions
 		*/
-		const v3 eval(const float t);
+		const V3 eval(const float t);
 };
 
 #endif

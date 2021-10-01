@@ -1,31 +1,31 @@
 /**
- * Class for defining all common public functions that shapes should have for our ray tracer.
+ * Class for defining all common public functions that shapes should have for our Ray tracer.
  */
 #ifndef _SHAPE_
 #define _SHAPE_
 
-#include <inc/ray.h>
-#include <inc/material.h>
+#include <inc/Ray.h>
+#include <inc/Material.h>
 #include <inc/hitRecord.h>
 #include <inc/cmpfloat.h>
 
-class shape {
+class Shape {
     protected:
         Material material_;
 
     public:
-        shape() {}
+        Shape() {}
 
         Material getMaterial() const {return material_;}
         Material& getMaterial() {return material_;}
 
         /** 
-         * Returns the number of intersections that a ray casted 
+         * Returns the number of intersections that a Ray casted 
          * from a point-origin with direction has with this object.
-         * @param ray A ray with a point in 3 dimensional space and a direction.
+         * @param Ray A Ray with a point in 3 dimensional space and a direction.
          * @return The number of intersections.
          */
-        virtual bool const rayIntersections(const ray &casted, hitRecord& rec) = 0;
+        virtual bool const rayIntersections(const Ray &casted, HitRecord& rec) = 0;
 };
 
 #endif

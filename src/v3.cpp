@@ -1,62 +1,62 @@
-#include <inc/v3.h>
+#include <inc/V3.h>
 
 ///////////////////////////////////////////////////////////////
 // Accessors
 ///////////////////////////////////////////////////////////////
 
-float v3::operator[](int i) const {
+float V3::operator[](int i) const {
     return v[i];
 }
 
-float& v3::operator[](int i) {
+float& V3::operator[](int i) {
     return v[i];
 }
 
-float v3::x() const {
+float V3::x() const {
     return v[0];
 }
 
-float& v3::x() {
+float& V3::x() {
     return v[0];
 }
 
-float v3::y() const {
+float V3::y() const {
     return v[1];
 }
 
-float& v3::y() {
+float& V3::y() {
     return v[1];
 }
 
-float v3::z() const {
+float V3::z() const {
     return v[2];
 }
 
-float& v3::z() {
+float& V3::z() {
     return v[2];
 }
 
-float v3::r() const {
+float V3::r() const {
     return v[0];
 }
 
-float& v3::r() {
+float& V3::r() {
     return v[0];
 }
 
-float v3::g() const {
+float V3::g() const {
     return v[1];
 }
 
-float& v3::g() {
+float& V3::g() {
     return v[1];
 }
 
-float v3::b() const {
+float V3::b() const {
     return v[2];
 }
 
-float& v3::b() {
+float& V3::b() {
     return v[2];
 }
 
@@ -64,19 +64,19 @@ float& v3::b() {
 // Unary
 ///////////////////////////////////////////////////////////////
 
-v3 v3::operator+() const {
+V3 V3::operator+() const {
     return *this;
 }
 
-v3 v3::operator-() const {
-    return v3(-v[0], -v[1], -v[2]);
+V3 V3::operator-() const {
+    return V3(-v[0], -v[1], -v[2]);
 }
 
 ///////////////////////////////////////////////////////////////
 // Assignments
 ///////////////////////////////////////////////////////////////
 
-v3& v3::operator=(const v3& rhs) {
+V3& V3::operator=(const V3& rhs) {
     v[0] = rhs.v[0];
     v[1] = rhs.v[1];
     v[2] = rhs.v[2];
@@ -84,7 +84,7 @@ v3& v3::operator=(const v3& rhs) {
     return *this;
 }
 
-v3& v3::operator+=(const v3& rhs) {
+V3& V3::operator+=(const V3& rhs) {
     v[0] += rhs.v[0];
     v[1] += rhs.v[1];
     v[2] += rhs.v[2];
@@ -92,7 +92,7 @@ v3& v3::operator+=(const v3& rhs) {
     return *this;
 }
 
-v3& v3::operator-=(const v3& rhs) {
+V3& V3::operator-=(const V3& rhs) {
     v[0] -= rhs.v[0];
     v[1] -= rhs.v[1];
     v[2] -= rhs.v[2];
@@ -100,7 +100,7 @@ v3& v3::operator-=(const v3& rhs) {
     return *this;
 }
 
-v3& v3::operator*=(const v3& rhs) {
+V3& V3::operator*=(const V3& rhs) {
     v[0] *= rhs.v[0];
     v[1] *= rhs.v[1];
     v[2] *= rhs.v[2];
@@ -108,7 +108,7 @@ v3& v3::operator*=(const v3& rhs) {
     return *this;
 }
 
-v3& v3::operator/=(const v3& rhs) {
+V3& V3::operator/=(const V3& rhs) {
     v[0] /= rhs.v[0];
     v[1] /= rhs.v[1];
     v[2] /= rhs.v[2];
@@ -116,7 +116,7 @@ v3& v3::operator/=(const v3& rhs) {
     return *this;
 }
 
-v3& v3::operator*=(const float rhs) {
+V3& V3::operator*=(const float rhs) {
     v[0] *= rhs;
     v[1] *= rhs;
     v[2] *= rhs;
@@ -124,7 +124,7 @@ v3& v3::operator*=(const float rhs) {
     return *this;
 }
 
-v3& v3::operator/=(const float rhs) {
+V3& V3::operator/=(const float rhs) {
     v[0] /= rhs;
     v[1] /= rhs;
     v[2] /= rhs;
@@ -136,66 +136,66 @@ v3& v3::operator/=(const float rhs) {
 // Operations
 ///////////////////////////////////////////////////////////////
 
-v3 const v3::operator+(const v3& rhs) {
-    return v3(v[0] + rhs.v[0], v[1] + rhs.v[1], v[2] + rhs.v[2]);
+V3 const V3::operator+(const V3& rhs) {
+    return V3(v[0] + rhs.v[0], v[1] + rhs.v[1], v[2] + rhs.v[2]);
 }
 
-v3 const v3::operator-(const v3& rhs) {
-    return v3(v[0] - rhs.v[0], v[1] - rhs.v[1], v[2] - rhs.v[2]);
+V3 const V3::operator-(const V3& rhs) {
+    return V3(v[0] - rhs.v[0], v[1] - rhs.v[1], v[2] - rhs.v[2]);
 }
 
-v3 const v3::operator*(const v3& rhs) {
-    return v3(v[0] * rhs.v[0], v[1] * rhs.v[1], v[2] * rhs.v[2]);
+V3 const V3::operator*(const V3& rhs) {
+    return V3(v[0] * rhs.v[0], v[1] * rhs.v[1], v[2] * rhs.v[2]);
 }
 
-v3 const v3::operator/(const v3& rhs) {
-    return v3(v[0] / rhs.v[0], v[1] / rhs.v[1], v[2] / rhs.v[2]);
+V3 const V3::operator/(const V3& rhs) {
+    return V3(v[0] / rhs.v[0], v[1] / rhs.v[1], v[2] / rhs.v[2]);
 }
 
-v3 const v3::operator*(const float rhs) {
-    return v3(v[0] * rhs, v[1] * rhs, v[2] * rhs);
+V3 const V3::operator*(const float rhs) {
+    return V3(v[0] * rhs, v[1] * rhs, v[2] * rhs);
 }
 
-v3 const v3::operator/(const float rhs) {
-    return v3(v[0] / rhs, v[1] / rhs, v[2] / rhs);
+V3 const V3::operator/(const float rhs) {
+    return V3(v[0] / rhs, v[1] / rhs, v[2] / rhs);
 }
 
-v3 const operator*(const float lhs, const v3& rhs) {
-    return v3(rhs.v[0] * lhs, rhs.v[1] * lhs, rhs.v[2] * lhs);
+V3 const operator*(const float lhs, const V3& rhs) {
+    return V3(rhs.v[0] * lhs, rhs.v[1] * lhs, rhs.v[2] * lhs);
 }
 
 ///////////////////////////////////////////////////////////////
 // Comparisons
 ///////////////////////////////////////////////////////////////
 
-bool v3::operator==(const v3& rhs) {
+bool V3::operator==(const V3& rhs) {
     return (CMPFLOAT_EQUAL(v[0], rhs.v[0]) &&
             CMPFLOAT_EQUAL(v[1], rhs.v[1]) &&
             CMPFLOAT_EQUAL(v[2], rhs.v[2]));
 }
 
-bool v3::operator!=(const v3& rhs) {
+bool V3::operator!=(const V3& rhs) {
     return (CMPFLOAT_NEQUAL(v[0], rhs.v[0]) ||
             CMPFLOAT_NEQUAL(v[1], rhs.v[1]) ||
             CMPFLOAT_NEQUAL(v[2], rhs.v[2]));
 }
 
-bool v3::operator>=(const v3& rhs) {
+bool V3::operator>=(const V3& rhs) {
     return CMPFLOAT_EGREATER(v[0] * v[0] + v[1] * v[1] + v[2] * v[2],
             rhs.v[0] * rhs.v[0] + rhs.v[1] * rhs.v[1] + rhs.v[2] * rhs.v[2]);
 }
 
-bool v3::operator<=(const v3& rhs) {
+bool V3::operator<=(const V3& rhs) {
     return CMPFLOAT_ELESS(v[0] * v[0] + v[1] * v[1] + v[2] * v[2],
             rhs.v[0] * rhs.v[0] + rhs.v[1] * rhs.v[1] + rhs.v[2] * rhs.v[2]);
 }
 
-bool v3::operator>(const v3& rhs) {
+bool V3::operator>(const V3& rhs) {
     return CMPFLOAT_GREATER(v[0] * v[0] + v[1] * v[1] + v[2] * v[2],
             rhs.v[0] * rhs.v[0] + rhs.v[1] * rhs.v[1] + rhs.v[2] * rhs.v[2]);
 }
 
-bool v3::operator<(const v3& rhs) {
+bool V3::operator<(const V3& rhs) {
     return CMPFLOAT_LESS(v[0] * v[0] + v[1] * v[1] + v[2] * v[2],
             rhs.v[0] * rhs.v[0] + rhs.v[1] * rhs.v[1] + rhs.v[2] * rhs.v[2]);
 }
@@ -204,12 +204,12 @@ bool v3::operator<(const v3& rhs) {
 // IO
 ///////////////////////////////////////////////////////////////
 
-std::ostream& operator<<(std::ostream& out, const v3& rhs) {
+std::ostream& operator<<(std::ostream& out, const V3& rhs) {
     out << "{" << rhs.v[0] << "," << rhs.v[1] << "," << rhs.v[2] << "}";
     return out;
 }
 
-//std::istream& operator<<(std::istream& in, const v3& rhs) {
+//std::istream& operator<<(std::istream& in, const V3& rhs) {
 //    //TODO
 //}
 
@@ -217,42 +217,42 @@ std::ostream& operator<<(std::ostream& out, const v3& rhs) {
 // Vector Operations
 ///////////////////////////////////////////////////////////////
 
-v3 const v3::crossProduct(const v3& rhs) const {
-    return v3(v[1] * rhs.v[2] - v[2] * rhs.v[1],
+V3 const V3::crossProduct(const V3& rhs) const {
+    return V3(v[1] * rhs.v[2] - v[2] * rhs.v[1],
               v[2] * rhs.v[0] - v[0] * rhs.v[2],
               v[0] * rhs.v[1] - v[1] * rhs.v[0]);
 }
 
-float const v3::dotProduct(const v3& rhs) const {
+float const V3::dotProduct(const V3& rhs) const {
     return v[0] * rhs.v[0] + v[1] * rhs.v[1] + v[2] * rhs.v[2];
 }
 
-float const v3::magnitude() const {
+float const V3::magnitude() const {
     return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 }
 
-float const v3::magnitudeSquared() const {
+float const V3::magnitudeSquared() const {
     return v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
 }
 
-float const v3::distance(const v3& rhs) const {
+float const V3::distance(const V3& rhs) const {
     return sqrt((v[0] - rhs.v[0]) * (v[0] - rhs.v[0]) +
                 (v[1] - rhs.v[1]) * (v[1] - rhs.v[1]) +
                 (v[2] - rhs.v[2]) * (v[2] - rhs.v[2]));
 }
 
-float const v3::distanceSquared(const v3& rhs) const {
+float const V3::distanceSquared(const V3& rhs) const {
     return (v[0] - rhs.v[0]) * (v[0] - rhs.v[0]) +
            (v[1] - rhs.v[1]) * (v[1] - rhs.v[1]) +
            (v[2] - rhs.v[2]) * (v[2] - rhs.v[2]);
 }
 
-v3 const v3::unitVector() const {
+V3 const V3::unitVector() const {
     float m = this->magnitude();
-    return v3(v[0] / m, v[1] / m, v[2] / m);
+    return V3(v[0] / m, v[1] / m, v[2] / m);
 }
 
-v3& v3::normalize() {
+V3& V3::normalize() {
     float m = this->magnitude();
     v[0] /= m;
     v[1] /= m;
