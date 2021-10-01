@@ -13,7 +13,7 @@ class hitRecord {
         float t_;
         v3 point_;
         v3 normal_;
-        material material_;
+        Material material_;
     public:
         hitRecord() {}
         
@@ -21,10 +21,10 @@ class hitRecord {
             t_ = t;
             point_ = point;
             normal_ = normal;
-            material_ = material();
+            material_ = Material();
         }
         
-        hitRecord(float t, const v3& point, const v3& normal, const material& material) {
+        hitRecord(float t, const v3& point, const v3& normal, const Material& material) {
             t_ = t;
             point_ = point;
             normal_ = normal;
@@ -40,8 +40,16 @@ class hitRecord {
         v3 normal() const {return normal_;}
         v3& normal() {return normal_;}
 
-        material getMaterial() const {return material_;}
-        material& getMaterial() {return material_;}
+        Material getMaterial() const {return material_;}
+        Material& getMaterial() {return material_;}
+
+        hitRecord& operator=(hitRecord rhs) {
+            t_ = rhs.t_;
+            point_ = rhs.point_;
+            normal_ = rhs.normal_;
+            material_ = rhs.material_;
+            return *this;
+        }
 };
 
 #endif

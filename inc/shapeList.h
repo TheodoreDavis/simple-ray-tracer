@@ -16,7 +16,7 @@ class shapelist {
 
         void add(shape* newShape);
 
-        bool const intersectionAtRay(const ray &casted, hitRecord& rec);
+        bool intersectionAtRay(const ray &casted, hitRecord& rec)  const;
 };
 
 #endif

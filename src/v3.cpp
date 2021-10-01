@@ -64,11 +64,11 @@ float& v3::b() {
 // Unary
 ///////////////////////////////////////////////////////////////
 
-v3 v3::operator+() {
+v3 v3::operator+() const {
     return *this;
 }
 
-v3 v3::operator-() {
+v3 v3::operator-() const {
     return v3(-v[0], -v[1], -v[2]);
 }
 
@@ -217,37 +217,37 @@ std::ostream& operator<<(std::ostream& out, const v3& rhs) {
 // Vector Operations
 ///////////////////////////////////////////////////////////////
 
-v3 const v3::crossProduct(const v3& rhs) {
+v3 const v3::crossProduct(const v3& rhs) const {
     return v3(v[1] * rhs.v[2] - v[2] * rhs.v[1],
               v[2] * rhs.v[0] - v[0] * rhs.v[2],
               v[0] * rhs.v[1] - v[1] * rhs.v[0]);
 }
 
-float const v3::dotProduct(const v3& rhs) {
+float const v3::dotProduct(const v3& rhs) const {
     return v[0] * rhs.v[0] + v[1] * rhs.v[1] + v[2] * rhs.v[2];
 }
 
-float const v3::magnitude() {
+float const v3::magnitude() const {
     return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 }
 
-float const v3::magnitudeSquared() {
+float const v3::magnitudeSquared() const {
     return v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
 }
 
-float const v3::distance(const v3& rhs) {
+float const v3::distance(const v3& rhs) const {
     return sqrt((v[0] - rhs.v[0]) * (v[0] - rhs.v[0]) +
                 (v[1] - rhs.v[1]) * (v[1] - rhs.v[1]) +
                 (v[2] - rhs.v[2]) * (v[2] - rhs.v[2]));
 }
 
-float const v3::distanceSquared(const v3& rhs) {
+float const v3::distanceSquared(const v3& rhs) const {
     return (v[0] - rhs.v[0]) * (v[0] - rhs.v[0]) +
            (v[1] - rhs.v[1]) * (v[1] - rhs.v[1]) +
            (v[2] - rhs.v[2]) * (v[2] - rhs.v[2]);
 }
 
-v3 const v3::unitVector() {
+v3 const v3::unitVector() const {
     float m = this->magnitude();
     return v3(v[0] / m, v[1] / m, v[2] / m);
 }

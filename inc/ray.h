@@ -19,7 +19,7 @@ class ray {
 			this->direction_ = direction;
 			this->intensity_ = 0.0f;
 		}
-		ray(v3 origin, v3 direction, flaot intensity) {
+		ray(v3 origin, v3 direction, float intensity) {
 
 			this->origin_ = origin;
 			this->direction_ = direction;

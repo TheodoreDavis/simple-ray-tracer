@@ -1,5 +1,14 @@
 #include <inc/sphere.h>
 
+std::ostream& operator<<(std::ostream& out, const sphere &rhs) {
+	
+    out << "center={" << rhs.center_.x() <<
+        ", " << rhs.center_.y() <<
+        ", " << rhs.center_.z() <<
+        "} radius=" << rhs.radius_;
+	return out;
+}
+
 bool const sphere::rayIntersections(const ray &casted, hitRecord& rec) {
 	
 	ray r = casted;

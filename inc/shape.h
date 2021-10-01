@@ -11,13 +11,13 @@
 
 class shape {
     protected:
-        material material_;
+        Material material_;
 
     public:
-        shape() {  }
+        shape() {}
 
-        material getMaterial() const {return material_;}
-        material& getMaterial() {return material_;}
+        Material getMaterial() const {return material_;}
+        Material& getMaterial() {return material_;}
 
         /** 
          * Returns the number of intersections that a ray casted 

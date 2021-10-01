@@ -34,8 +34,8 @@ class v3 {
 
 
         // Unary
-        v3 operator+();
-        v3 operator-();
+        v3 operator+() const;
+        v3 operator-() const;
 
         // Assignments
         v3& operator=(const v3& rhs);
@@ -68,13 +68,13 @@ class v3 {
         friend std::istream& operator>>(std::istream& in, const v3& rhs);
 
         // Vector Operations
-        v3 const crossProduct(const v3& rhs); // https://www.mathsisfun.com/algebra/vectors-cross-product.html
-        float const dotProduct(const v3& rhs); // https://www.mathsisfun.com/algebra/vectors-dot-product.html
-        float const magnitude();
-        float const magnitudeSquared();
-        float const distance(const v3& rhs);
-        float const distanceSquared(const v3& rhs);
-        v3 const unitVector();
+        v3 const crossProduct(const v3& rhs) const; // https://www.mathsisfun.com/algebra/vectors-cross-product.html
+        float const dotProduct(const v3& rhs) const; // https://www.mathsisfun.com/algebra/vectors-dot-product.html
+        float const magnitude() const;
+        float const magnitudeSquared() const;
+        float const distance(const v3& rhs) const;
+        float const distanceSquared(const v3& rhs) const;
+        v3 const unitVector() const;
         v3& normalize(); //TODO? convert *this to a unit vector
 
         // math

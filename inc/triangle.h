@@ -17,11 +17,11 @@ class triangle : public shape {
 			this->a_ = a;
 			this->b_ = b;
 			this->c_ = c;
-			this->material_ = material(v3(1.0f, 0.4f, 0.4f));  //color is pastel red
+			this->material_ = Material(v3(1.0f, 0.4f, 0.4f));  //color is pastel red
 			
 			this->norm_ = ((v3)(b - a)).crossProduct(c - a);
 		}
-		triangle(v3 a, v3 b, v3 c, material mat) {
+		triangle(v3 a, v3 b, v3 c, Material mat) {
 			this->a_ = a;
 			this->b_ = b;
 			this->c_ = c;
