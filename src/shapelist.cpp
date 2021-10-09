@@ -14,7 +14,7 @@ bool Shapelist::intersectionAtRay(const Ray &casted, HitRecord& rec) const {
         curr = HitRecord();
         if(s->rayIntersections(casted, curr)) {
             // Throw away hits that are behind or at the origin.
-            if(CMPFLOAT_GREATER(curr.t(), 0.05)) {
+            if(CMPFLOAT_GREATER(curr.t(), 0.005)) {
                 flag = true;
                 if(CMPFLOAT_LESS((curr.t() * casted.dir()).magnitudeSquared(), (rec.t() * casted.dir()).magnitudeSquared()))
                     rec = curr;

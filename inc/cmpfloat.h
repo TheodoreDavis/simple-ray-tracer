@@ -12,4 +12,6 @@
 #define CMPFLOAT_EGREATER(a, b) (!(CMPFLOAT_LESS(a, b)))
 #define CMPFLOAT_ELESS(a, b) (!(CMPFLOAT_GREATER(a, b)))
 
+#define FLOAT_RAND (float)rand()/(float)(RAND_MAX+1.0)
+
 #endif

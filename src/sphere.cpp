@@ -30,8 +30,15 @@ bool const Sphere::rayIntersections(const Ray &casted, HitRecord& rec) {
         float t1 = (-b + sqrt(res)) / 2.0;
         float t2 = (-b - sqrt(res)) / 2.0;
 
-        // The t with the smaller length is the first intersection
-        rec.t() = CMPFLOAT_LESS(abs(t1), abs(t2)) ? t1 : t2;
+        // Find the smaller t that is > 0
+        if(CMPFLOAT_GREATER(t1, 0.005) && CMPFLOAT_GREATER(t2, 0.005))
+            rec.t() = CMPFLOAT_LESS(t1, t2) ? t1 : t2;
+        else if(CMPFLOAT_GREATER(t1, 0.005))
+            rec.t() = t1;
+        else if(CMPFLOAT_GREATER(t2, 0.005))
+            rec.t() = t2;
+        else
+            return false; // Only happens if origin is next to the surface of the sphere and shoots a ray away from center
     }
 
     rec.point() = r.ori() + rec.t() * r.dir();

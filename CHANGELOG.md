@@ -1,3 +1,8 @@
+- 10/9/2021 -- 2:00 pm
+	- tcdavis --
+		- Added anti-aliasing
+        - Fixed issue where ray would intersect at origin
+        - Fixed issue where sphere would return -rays
 - 09/30/2021 -- 7:00 pm
 	- tcdavis --
 		- Removed Material.cpp
