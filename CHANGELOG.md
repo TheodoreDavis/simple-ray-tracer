@@ -1,3 +1,6 @@
+10/10/2021 --11:50am
+	- sgriffen --
+		- Fixed problems in diffuse algorithm
 10/9/2021 -- 8:15 pm
 	- sgriffen --
 		- Renamed cmpfloat.h to floatutils.h

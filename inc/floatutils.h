@@ -15,4 +15,6 @@
 
 #define FLOAT_RAND (rand()/(RAND_MAX+1.0))
 
+#define FLOAT_SQUARE(a) (a*a)
+
 #endif

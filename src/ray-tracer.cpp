@@ -37,14 +37,11 @@ int main(int argc, char *argv[]) {
     V3 plane = V3(0,0,1);
 
     //Add shapes into our space
-    //std::vector<shape> shapes;
-    //shapes.push_back(Sphere(V3(0,0,2), 1.0));
     Shapelist shapes = Shapelist();
-    shapes.add(new Sphere(V3(0.3,0,7), 1.0, Material(V3(.7, .2, .7)))); //perfectly diffuse sphere
-    //shapes.add(new Sphere(V3(0,0,4), 2, Material(0, 0, 1.0, 0, 1.3, V3(0.392, 0.584, 0.929))));
+    shapes.add(new Triangle(V3(-7.3, 5, 0), V3(7.3, 5, 0), V3(0, 2, 15), Material(0.8, V3(0,1.0,0)))); //specular reflective triangle celing
+    shapes.add(new Sphere(V3(0.3,-3,7), 1.0, Material(0.0, 0.5, 0.0, 0.5, 1.0, V3(.7, .2, .7)))); //perfectly diffuse sphere
     shapes.add(new Sphere(V3(4,0,4.5), 1.0, Material(0.99, V3(.9,.9,.9)))); //specular reflective diffuse sphere
-    shapes.add(new Triangle(V3(-7.3, -5, 0), V3(7.3, -5, 0), V3(0, -2, 15), Material(0.7, V3(1.0, 0.4, 0.4)))); //perfectly diffuse triangle floor
-    shapes.add(new Triangle(V3(-7.3, 5, 0), V3(7.3, 5, 0), V3(0, 2, 15), Material(0.7, V3(0,255,0)))); //specular reflective triangle celing
+    shapes.add(new Triangle(V3(-7.3, -5, 0), V3(7.3, -5, 0), V3(0, -2, 15), Material(0.0, 0.5, 0.0, 0.5, 1.0, V3(1.0, 0.4, 0.4)))); //perfectly diffuse triangle floor
 
     // Image data
     uint32_t height = 3000, width = 4000;
@@ -65,7 +62,7 @@ int main(int argc, char *argv[]) {
         float progCurr = (float) y / (float) height;
         if (FLOAT_EQUAL(progPrev, 0.0)) { progPrev = progCurr; }
         if(FLOAT_EGREATER(progCurr - progPrev, 0.01)) {
-            printf("image %3d%% rendered\n", (int)(progCurr * 100));
+            printf("image %3d%% - %d/%d lines - rendered\n", (int)(progCurr * 100), y, height);
             progPrev = progCurr;
         }
 
@@ -83,7 +80,7 @@ int main(int argc, char *argv[]) {
             image[y][x] = color / ANTI_ALIASING;
         }
     }
-    printf("image %3d%% rendered\n", 100);
+    printf("image %3d%% - %d/%d lines - rendered\n", 100, height, height);
 
 	  image_write_rgb("./out/output", image, height, width);
 
@@ -149,24 +146,12 @@ V3 diffuseAlgo(const Ray& in, const V3& norm, const V3& point, const float inten
     V3 sCenter = p + n;
     // find a point p0 that's a uniformally distributed point inside the sphere
     // -- find a point p0 inside the boinding cube (cube with side length 2) of the sphere and check if it's in the sphere
-    float p0_x = (sCenter.x() + FLOAT_RAND*2)-1;
-    float p0_y = (sCenter.y() + FLOAT_RAND*2)-1;
-    float p0_z = (sCenter.z() + FLOAT_RAND*2)-1;
-    int itr = 0;
-    while (FLOAT_GREATER(sqrt(p0_x*p0_x + p0_y*p0_y + p0_z*p0_z), 1.0)) {
-        //std::cout << FLOAT_RAND << std::endl;
-        p0_x = (sCenter.x() + FLOAT_RAND*2)-1;
-        p0_y = (sCenter.y() + FLOAT_RAND*2)-1;
-        p0_z = (sCenter.z() + FLOAT_RAND*2)-1;
-        itr++;
-        if (itr > 1000) {
-            p0_x = sCenter.x();
-            p0_y = sCenter.y();
-            p0_z = sCenter.z();
-            break;
-        }
-    }
-    V3 p0 = V3(p0_x, p0_y, p0_z);
+    V3 p0;
+    do {
+        p0.x() = (sCenter.x() + FLOAT_RAND*2)-1;
+        p0.y() = (sCenter.y() + FLOAT_RAND*2)-1;
+        p0.z() = (sCenter.z() + FLOAT_RAND*2)-1;
+    }   while(FLOAT_GREATER(FLOAT_SQUARE(sCenter.x()-p0.x()) + FLOAT_SQUARE(sCenter.y()-p0.y()) + FLOAT_SQUARE(sCenter.z()-p0.z()), 1.0));
 
     Ray out = Ray(p, (V3)(p + n) + (p0 - n).unitVector(), intensity);
     return getColor(out, shapes, currIndex, depth);
