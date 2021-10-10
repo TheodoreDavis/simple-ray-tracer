@@ -9,6 +9,12 @@ class Sphere : public Shape {
         float radius_;
 
     public:
+        Sphere(V3 center) {
+            center_ = center;
+            radius_ = 1.0;
+            material_ = Material(V3(0.392, 0.584, 0.929));
+        }
+        
         Sphere(V3 center, float radius) {
             center_ = center;
             radius_ = radius;

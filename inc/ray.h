@@ -8,6 +8,7 @@ class Ray {
 		V3 origin_;
 		V3 direction_;
 		float intensity_;
+		float currIoR_;
 	public:
 		/*
 			constructors
@@ -17,7 +18,7 @@ class Ray {
 
 			this->origin_ = origin;
 			this->direction_ = direction;
-			this->intensity_ = 0.0f;
+			this->intensity_ = 1.0f;
 		}
 		Ray(V3 origin, V3 direction, float intensity) {
 
@@ -25,7 +26,6 @@ class Ray {
 			this->direction_ = direction;
 			this->intensity_ = intensity;
 		}
-
 
 		/*
 			accessors
@@ -36,6 +36,8 @@ class Ray {
 		V3& dir() { return this->direction_; }
 		float intensity() const { return this->intensity_; }
 		float& intensity() { return this->intensity_; }
+		float currIoR() const { return this->currIoR_; }
+		float& currIoR() { return this->currIoR_; }
 
 		/*
 			i/o functions

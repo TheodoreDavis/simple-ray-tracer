@@ -1,7 +1,7 @@
 #ifndef _V3_
 #define _V3_
 
-#include <inc/cmpfloat.h>
+#include <inc/floatutils.h>
 #include <iostream>
 #include <cmath>
 
@@ -9,7 +9,7 @@
 class V3 {
     private:
         float v[3];
-    
+
     public:
         // Constructors
         V3() {}

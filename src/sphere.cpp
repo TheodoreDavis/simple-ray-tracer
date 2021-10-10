@@ -20,22 +20,22 @@ bool const Sphere::rayIntersections(const Ray &casted, HitRecord& rec) {
     float res = b * b - 4 * c;
     
     // no real roots
-    if (CMPFLOAT_LESS(res, 0.0f))
+    if (FLOAT_LESS(res, 0.0f))
         return false;
 
     // 1 real root
-    if (CMPFLOAT_EQUAL(res, 0.0f)) {
+    if (FLOAT_EQUAL(res, 0.0f)) {
         rec.t() = -b / 2.0;
     } else {
         float t1 = (-b + sqrt(res)) / 2.0;
         float t2 = (-b - sqrt(res)) / 2.0;
 
         // Find the smaller t that is > 0
-        if(CMPFLOAT_GREATER(t1, 0.005) && CMPFLOAT_GREATER(t2, 0.005))
-            rec.t() = CMPFLOAT_LESS(t1, t2) ? t1 : t2;
-        else if(CMPFLOAT_GREATER(t1, 0.005))
+        if(FLOAT_GREATER(t1, 0.005) && FLOAT_GREATER(t2, 0.005))
+            rec.t() = FLOAT_LESS(t1, t2) ? t1 : t2;
+        else if(FLOAT_GREATER(t1, 0.005))
             rec.t() = t1;
-        else if(CMPFLOAT_GREATER(t2, 0.005))
+        else if(FLOAT_GREATER(t2, 0.005))
             rec.t() = t2;
         else
             return false; // Only happens if origin is next to the surface of the sphere and shoots a ray away from center

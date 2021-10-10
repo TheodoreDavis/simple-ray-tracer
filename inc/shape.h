@@ -7,7 +7,7 @@
 #include <inc/Ray.h>
 #include <inc/Material.h>
 #include <inc/hitRecord.h>
-#include <inc/cmpfloat.h>
+#include <inc/floatutils.h>
 
 class Shape {
     protected:
@@ -19,8 +19,8 @@ class Shape {
         Material getMaterial() const {return material_;}
         Material& getMaterial() {return material_;}
 
-        /** 
-         * Returns the number of intersections that a Ray casted 
+        /**
+         * Returns the number of intersections that a Ray casted
          * from a point-origin with direction has with this object.
          * @param Ray A Ray with a point in 3 dimensional space and a direction.
          * @return The number of intersections.

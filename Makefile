@@ -10,7 +10,7 @@ CC		= g++
 
 all: test release debug
 
-test: test-v3 test-cmpfloat test-image test-sphere test-triangle
+test: test-v3 test-floatutils test-image test-sphere test-triangle
 
 release: src/ray-tracer.cpp obj/v3.o obj/ray.o obj/sphere.o obj/triangle.o obj/image.o obj/shapelist.o
 	mkdir -p release
@@ -27,11 +27,11 @@ debug: src/ray-tracer.cpp obj/v3.o obj/ray.o obj/sphere.o obj/triangle.o obj/ima
 test-v3: test/test-v3.cpp obj/v3.o
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
 	echo done -- made bin/test-v3
-	
-test-cmpfloat: inc/cmpfloat.h test/test-cmpfloat.cpp
+
+test-float: inc/floatutils.h test/test-floatutils.cpp
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
-	echo done -- made bin/test-cmpfloat
-	
+	echo done -- made bin/test-floatutils
+
 test-image: test/test-image.cpp obj/image.o obj/v3.o
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
 	echo done -- made bin/test-image
@@ -50,16 +50,16 @@ test-triangle: test/test-triangle.cpp obj/triangle.o obj/ray.o obj/v3.o
 
 obj/v3.o: inc/v3.h src/v3.cpp subdirs
 	$(CC) $(CFLAGS) -c -o $@ -I. src/v3.cpp
-	
+
 obj/ray.o: inc/ray.h src/ray.cpp subdirs
 	$(CC) $(CFLAGS) -c -o $@ -I. src/ray.cpp
-	
+
 obj/image.o: inc/image.h src/image.cpp subdirs
 	$(CC) $(CFLAGS) -c -o $@ -I. src/image.cpp
 
 obj/sphere.o: inc/shape.h inc/sphere.h src/sphere.cpp subdirs
 	$(CC) $(CFLAGS) -c -o $@ -I. src/sphere.cpp
-	
+
 obj/triangle.o: inc/shape.h inc/triangle.h src/triangle.cpp subdirs
 	$(CC) $(CFLAGS) -c -o $@ -I. src/triangle.cpp
 

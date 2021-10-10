@@ -4,7 +4,7 @@
 #include <inc/Shape.h>
 #include <inc/V3.h>
 #include <inc/HitRecord.h>
-#include <inc/cmpfloat.h>
+#include <inc/floatutils.h>
 #include <vector>
 #include <memory>
 
