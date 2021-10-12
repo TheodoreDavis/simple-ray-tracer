@@ -5,43 +5,45 @@ endif
 
 SUBDIRS = obj bin # Auto generated directories
 
-CFLAGS 	= -Wall -Werror -g3
+
+CFLAGS_DEBUG 	= -Wall -Werror -g3 -std=c++17
+CFLAGS_RELEASE 	= -Wall -Werror -std=c++17
 CC		= g++
 
 all: test release debug
 
 test: test-V3 test-floatutils test-image test-Sphere test-Triangle
 
-release: src/ray-tracer.cpp obj/V3.o obj/Ray.o obj/Sphere.o obj/Triangle.o obj/image.o obj/Shapelist.o
+release: main.cpp obj/V3.o obj/Ray.o obj/Sphere.o obj/Triangle.o obj/image.o obj/ShapeList.o
 	mkdir -p release
-	$(CC) -Wall -Werror -o release/ray-tracer -I. $^
-	echo done -- made release/ray-tracer
+	$(CC) $(CFLAGS_RELEASE) -o release/cs336-raytracer -I. $^
+	echo done -- made release/cs336-raytracer
 
-debug: src/ray-tracer.cpp obj/V3.o obj/Ray.o obj/Sphere.o obj/Triangle.o obj/image.o obj/Shapelist.o
+debug: main.cpp obj/V3.o obj/Ray.o obj/Sphere.o obj/Triangle.o obj/image.o obj/ShapeList.o
 	mkdir -p debug
-	$(CC) $(CFLAGS) -o debug/ray-tracer -I. $^
-	echo done -- made debug/ray-tracer
+	$(CC) $(CFLAGS_DEBUG) -o debug/cs336-raytracer -I. $^
+	echo done -- made debug/cs336-raytracer
 
 .PHONY: all clean subdirs $(SUBDIRS)
 
 test-V3: test/test-V3.cpp obj/V3.o
-	$(CC) $(CFLAGS) -o bin/$@ -I. $^
+	$(CC) $(CFLAGS_DEBUG) -o bin/$@ -I. $^
 	echo done -- made bin/test-V3
 
 test-float: inc/floatutils.h test/test-floatutils.cpp
-	$(CC) $(CFLAGS) -o bin/$@ -I. $^
+	$(CC) $(CFLAGS_DEBUG) -o bin/$@ -I. $^
 	echo done -- made bin/test-floatutils
 
 test-image: test/test-image.cpp obj/image.o obj/V3.o
-	$(CC) $(CFLAGS) -o bin/$@ -I. $^
+	$(CC) $(CFLAGS_DEBUG) -o bin/$@ -I. $^
 	echo done -- made bin/test-image
 
 test-Sphere: test/test-Sphere.cpp obj/Sphere.o obj/Ray.o obj/V3.o
-	$(CC) $(CFLAGS) -o bin/$@ -I. $^
+	$(CC) $(CFLAGS_DEBUG) -o bin/$@ -I. $^
 	echo done -- made bin/test-Sphere
 
 test-Triangle: test/test-Triangle.cpp obj/Triangle.o obj/Ray.o obj/V3.o
-	$(CC) $(CFLAGS) -o bin/$@ -I. $^
+	$(CC) $(CFLAGS_DEBUG) -o bin/$@ -I. $^
 	echo done -- made bin/test-Triangle
 
 #####################################################################
@@ -49,22 +51,28 @@ test-Triangle: test/test-Triangle.cpp obj/Triangle.o obj/Ray.o obj/V3.o
 #####################################################################
 
 obj/V3.o: inc/V3.h src/V3.cpp subdirs
-	$(CC) $(CFLAGS) -c -o $@ -I. src/V3.cpp
+	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/V3.cpp
+	echo made $@
 
 obj/Ray.o: inc/Ray.h src/Ray.cpp subdirs
-	$(CC) $(CFLAGS) -c -o $@ -I. src/Ray.cpp
+	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/Ray.cpp
+	echo made $@
 
 obj/image.o: inc/image.h src/image.cpp subdirs
-	$(CC) $(CFLAGS) -c -o $@ -I. src/image.cpp
+	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/image.cpp
+	echo made $@
 
 obj/Sphere.o: inc/Shape.h inc/Sphere.h src/Sphere.cpp subdirs
-	$(CC) $(CFLAGS) -c -o $@ -I. src/Sphere.cpp
+	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/Sphere.cpp
+	echo made $@
 
 obj/Triangle.o: inc/Shape.h inc/Triangle.h src/Triangle.cpp subdirs
-	$(CC) $(CFLAGS) -c -o $@ -I. src/Triangle.cpp
+	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/Triangle.cpp
+	echo made $@
 
-obj/Shapelist.o: inc/Shape.h inc/ShapeList.h src/ShapeList.cpp subdirs
-	$(CC) $(CFLAGS) -c -o $@ -I. src/ShapeList.cpp
+obj/ShapeList.o: inc/Shape.h inc/ShapeList.h src/ShapeList.cpp subdirs
+	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/ShapeList.cpp
+	echo made $@
 
 subdirs: $(SUBDIRS)
 

@@ -16,8 +16,8 @@ class Shape {
     public:
         Shape() {}
 
-        Material getMaterial() const {return material_;}
-        Material& getMaterial() {return material_;}
+        Material material() const {return material_;}
+        Material& material() {return material_;}
 
         /**
          * Returns the number of intersections that a Ray casted

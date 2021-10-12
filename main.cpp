@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <algorithm>
 #include <cmath>
 #include <ctime>
 
@@ -21,7 +22,7 @@ V3 diffuseAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currI
 V3 specularAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currIndex, const Shapelist& shapes, int depth);
 V3 glassAlgo(V3& color, const Ray& in, bool flag, const HitRecord& hit, const float indexMat1, const float indexMat2, const Shapelist& shapes, int depth);
 
-V3 dirInUnitCircle(const V3& center);
+V3 pointInUnitCircle(const V3& center, float limit = 1.0f);
 
 int main(int argc, char *argv[]) {
     // TODO if need user input
@@ -41,12 +42,13 @@ int main(int argc, char *argv[]) {
 
     //Add shapes into our space
     Shapelist shapes = Shapelist();
-    //shapes.add(new Triangle(V3(-200, 5, 100), V3(200, 5, 100), V3(0, 5, -100), Material(Property::Specular, 0, 0, V3(0.0,0.7,0.0)))); //green specular reflective triangle celing
+    //shapes.add(new Triangle(V3(-200, 5, 100), V3(200, 5, 100), V3(0, 5, -100), Material(Property::Specular, 0.7, V3(0.0,0.7,0.0)))); //green specular reflective triangle celing
     shapes.add(new Sphere(V3(0,0,3), 1.0, Material(Property::Diffuse, V3(.4, .5, .8)))); //blue perfectly diffuse sphere
-    //shapes.add(new Sphere(V3(-2,0,2.9), 1.0, Material(Property::Diffuse, V3(.7, .2, .7)))); //magenta perfectly diffuse sphere
-    //shapes.add(new Sphere(V3(-1,0.75,1.9), 0.5, Material(Property::Glass, V3(.9, .9, .9)))); //glass sphere: index of refrection = 1.4
-    //shapes.add(new Sphere(V3(-3,3,3), 1.0, Material(Property::Specular, .8, .3, V3(.9,.9,.9)))); //fuzzy specular sphere
-    shapes.add(new Sphere(V3(2,0,4.5), 1.0, Material(Property::Specular, .9, 0, V3(.9,.9,.9)))); //clear specular sphere
+    shapes.add(new Sphere(V3(-2,0,2.9), 1.0, Material(Property::Diffuse, V3(.7, .2, .7)))); //magenta perfectly diffuse sphere
+    //shapes.add(new Sphere(V3(-0.7,0.7,1.9), 0.5, Material(Property::Glass, 1.4, V3(.9, .9, .9)))); //glass sphere: index of refrection = 1.4
+    shapes.add(new Triangle(V3(-1.5, 0.4, 1.9), V3(1.5, 0.3, 1.9), V3(0, 1.4, 1.9), Material(Property::Glass, 1.0, V3(0.9, 0.9, 0.9)))); // glass triangle: index of refraction = 1.4
+    //shapes.add(new Sphere(V3(-3,3,3), 1.0, Material(Property::Specular, 0.9, V3(.9,.9,.9)))); //fuzzy specular sphere
+    //shapes.add(new Sphere(V3(2,0,4.5), 1.0, Material(Property::Specular, 0.0, V3(.9,.9,.9)))); //clear specular sphere
     shapes.add(new Triangle(V3(-200, -1, 100), V3(200, -1, 100), V3(0, -1, -100), Material(Property::Diffuse, V3(1.0, 0.4, 0.4)))); //red perfectly diffuse triangle floor
 
     // Image data
@@ -109,26 +111,26 @@ V3 getColor(const V3& c, const Ray& r, const Shapelist& shapes, float currIndex,
     HitRecord hit;
 
     if(shapes.intersectionAtRay(r, hit)) {
-        V3 color = c * hit.getMaterial().color();
+        V3 color = c * hit.material().color();
         V3 rcolor;
 
         // Look at diffuse
-        if(hit.getMaterial().property() == Property::Diffuse) {
+        if(hit.material().property() == Property::Diffuse) {
             rcolor = diffuseAlgo(color, r, hit, currIndex, shapes, depth + 1);
         }
 
         // Look at specular
-        if(hit.getMaterial().property() == Property::Specular) {
+        if(hit.material().property() == Property::Specular) {
             rcolor = specularAlgo(color, r, hit, currIndex, shapes, depth + 1);
         }
 
         // Look at glass
-        if(hit.getMaterial().property() == Property::Glass) {
+        if(hit.material().property() == Property::Glass) {
             // Exiting object into air
-            if(FLOAT_EQUAL(currIndex, hit.getMaterial().indexOfReflection()))
+            if(FLOAT_EQUAL(currIndex, hit.material().indexOfReflection()))
                 rcolor = glassAlgo(color, r, true, hit, currIndex, 1.0, shapes, depth + 1);
             else
-                rcolor = glassAlgo(color, r, false, hit, currIndex, hit.getMaterial().indexOfReflection(), shapes, depth + 1);
+                rcolor = glassAlgo(color, r, false, hit, currIndex, hit.material().indexOfReflection(), shapes, depth + 1);
         }
 
         return ff * color + (1.0 - ff) * rcolor;
@@ -144,7 +146,8 @@ V3 diffuseAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currI
     V3 sCenter = hit.point() + hit.normal();
     // find a point p0 that's a uniformally distributed point inside the sphere
     // -- find a point p0 inside the boinding cube (cube with side length 2) of the sphere and check if it's in the sphere
-    V3 p0 = dirInUnitCircle(sCenter);
+    V3 p0 = pointInUnitCircle(sCenter, hit.material().effect());
+
     V3 dir = (hit.point() + hit.normal()) + (p0 - hit.normal()).unitVector();
     Ray out = Ray(hit.point(), dir);
     return getColor(color, out, shapes, currIndex, depth);
@@ -152,7 +155,7 @@ V3 diffuseAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currI
 
 V3 specularAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currIndex, const Shapelist& shapes, int depth) {
     V3 outDir = in.dir() - 2 * in.dir().dotProduct(hit.normal()) * hit.normal();
-    outDir += hit.getMaterial().fuzz() * dirInUnitCircle(V3(0,0,0));
+    outDir += hit.material().fuzz() * pointInUnitCircle(V3(0,0,0));
     outDir.normalize();
     Ray out = Ray(hit.point(), outDir);
     return getColor(color, out, shapes, currIndex, depth);
@@ -185,12 +188,13 @@ V3 glassAlgo(V3& color, const Ray& in, bool flag, const HitRecord& hit, const fl
     return getColor(color, out, shapes, indexMat2, depth);
 }
 
-V3 dirInUnitCircle(const V3& center) {
+V3 pointInUnitCircle(const V3& center, float limit) {
+
     V3 p0;
     do {
-        p0.x() = (center.x() + FLOAT_RAND*2)-1;
-        p0.y() = (center.y() + FLOAT_RAND*2)-1;
-        p0.z() = (center.z() + FLOAT_RAND*2)-1;
+        p0.x() = (center.x() + std::clamp((float)(FLOAT_RAND), 0.0f, limit)*2)-1;
+        p0.y() = (center.y() + std::clamp((float)(FLOAT_RAND), 0.0f, limit)*2)-1;
+        p0.z() = (center.z() + std::clamp((float)(FLOAT_RAND), 0.0f, limit)*2)-1;
     }   while(FLOAT_GREATER(FLOAT_SQUARE(center.x()-p0.x()) + FLOAT_SQUARE(center.y()-p0.y()) + FLOAT_SQUARE(center.z()-p0.z()), 1.0));
     return p0;
 }

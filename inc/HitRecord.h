@@ -39,8 +39,8 @@ class HitRecord {
         V3 normal() const {return normal_;}
         V3& normal() {return normal_;}
 
-        Material getMaterial() const {return material_;}
-        Material& getMaterial() {return material_;}
+        Material material() const {return material_;}
+        Material& material() {return material_;}
 
         HitRecord& operator=(HitRecord rhs) {
             t_ = rhs.t_;
