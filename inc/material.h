@@ -1,57 +1,82 @@
 #ifndef _MATERIAL_
 #define _MATERIAL_
 
-#include <inc/v3.h>
+#include <inc/V3.h>
+
+enum class Property {Specular, Diffuse, Glass};
 
 /**
- * Class for holding light and color information
+ * Class for holding light and color information of a shape
+ *
+ * The following data members:
+ * specular_ diffuse_ glass_ absorb_
+ * should have a sum of 1
  */
-class material {
+class Material {
     private:
-        float specular_;
-        float diffuse_;
-        v3 color_;
+        Property property_;
+        float effect_;
+        float fuzz_;
+        float indexOfReflection_;
+
+        /**
+         * The base color of this shape
+         */
+        V3 color_;
 
     public:
-        material() {
-            specular_ = 0;
-            diffuse_ = 1;
-            color_ = v3(0.7,0.7,0);
+        Material() {
+            property_ = Property::Diffuse;
+            fuzz_ = 0;
+            indexOfReflection_ = 0;
+            color_ = V3(0.7,0.7,0);
         }
-        
-        material(v3 color) {
-            specular_ = 0;
-            diffuse_ = 1;
+
+        Material(V3 color) {
+            property_ = Property::Diffuse;
+            fuzz_ = 0;
+            indexOfReflection_ = 0;
             color_ = color;
         }
 
-        material(float specular, float diffuse) {
-            specular_ = specular;
-            diffuse_ = diffuse;
-            color_ = v3(0.7,0.7,0);
+        Material(Property property) {
+            property_ = property;
+            fuzz_ = (property == Property::Specular) ? 0.3 : 0;
+            indexOfReflection_ = (property == Property::Glass) ? 1.4 : 0;
+            color_ = V3(0.7,0.7,0);
         }
 
-        material(float specular, float diffuse, v3 color) {
-            specular_ = specular;
-            diffuse_ = diffuse;
+        Material(Property property, V3 color) {
+            property_ = property;
+            fuzz_ = (property == Property::Specular) ? 0.3 : 0;
+            indexOfReflection_ = (property == Property::Glass) ? 1.4 : 0;
             color_ = color;
         }
 
-        v3 color() const {return color_;}
-        v3& color() {return color_;}
+        Material(Property property, float effect, V3 color) {
+            property_ = property;
+            effect_ = effect;
+            fuzz_ = (property == Property::Specular) ? 0.3 : 0;
+            indexOfReflection_ = (property == Property::Glass) ? 1.4 : 0;
+            color_ = color;
+        }
 
-        float specular() const {return specular_;}
-        float& specular() {return specular_;}
+        Material(Property property, float effect, float fuzz_index, V3 color) {
+            property_ = property;
+            effect_ = effect;
+            fuzz_ = (property == Property::Specular) ? fuzz_index : 0;
+            indexOfReflection_ = (property == Property::Glass) ? fuzz_index : 0;
+            color_ = color;
+        }
 
-        float diffuse() const {return diffuse_;}
-        float& diffuse() {return diffuse_;}
 
-        // material& operator=(const material& rhs) {
-        //     specular_ = rhs.specular_;
-        //     diffuse_ = rhs.diffuse_;
-        //     color_ = rhs.color_;
-
-        //     return *this;
-        // }
+        Property property() const {return property_;}
+        Property& property() {return property_;}
+        float fuzz() const {return fuzz_;}
+        float& fuzz() {return fuzz_;}
+        float indexOfReflection() const {return indexOfReflection_;}
+        float& indexOfReflection() {return indexOfReflection_;}
+        V3 color() const {return color_;}
+        V3& color() {return color_;}
 };
 #endif

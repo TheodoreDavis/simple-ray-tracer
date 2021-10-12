@@ -1,3 +1,39 @@
+10/11/2021 -- 7:55pm
+	- sgriffen --
+		- Fixed pyrite-specific build errors
+			- Capitalized all class definition and implementation files
+		- Changed demo scene to meet assignment specifications
+		- Updated README.md with new description and descriptions on how to change scene, camera location, maximum recursion depth, and the sampling rate
+		- Submitted assignment 2
+10/10/2021 --11:50am
+	- sgriffen --
+		- Fixed problems in diffuse algorithm
+10/9/2021 -- 8:15 pm
+	- sgriffen --
+		- Renamed cmpfloat.h to floatutils.h
+			- Renamed all cmpfloat_ macros to float_
+		- Implemented diffuse material
+			- Some issues while testing, left un-implemented for now
+		- Placed triangles as the scene's floor and celling
+
+- 10/9/2021 -- 2:00 pm
+	- tcdavis --
+		- Added anti-aliasing
+        - Fixed issue where ray would intersect at origin
+        - Fixed issue where sphere would return -rays
+- 09/30/2021 -- 7:00 pm
+	- tcdavis --
+		- Removed Material.cpp
+		- Changed material to Material
+		- Fixed typo in ray.h
+		- Refacted all references to material to Material
+		- Made shapeList function const
+		- Made the v3 vector operations const
+		- Fixed issue inside shapeList.cpp where ray was insecting at or behind the origin
+		- Added << to sphere
+		- Added recursion to the ray tracer
+		- Encapsulated the get color methods of the ray tracer
+		- Changed background color to a #define
 - 09/24/2021 -- 8:25 pm
 	- sgriffen --
 		- Adding intensity member variable to ray and appropritate accessors
@@ -5,7 +41,7 @@
 	- sgriffen --
 		- Added ray class to wrap origin and direction vectors
 			- Has method to evaluate at time t
-		- Updated triangle class 
+		- Updated triangle class
 			- Now uses material class
 			- Updated implemented shape methods
 			- Updated to use ray class
@@ -41,21 +77,21 @@
 		- Updating image_write_rgb to take in a 2d array of vectors instead of a 2d array of uint32 tuples
 		- Updating test-image accordingly
 			- Issue while trying to make test-image, image_write_rgb not found for some reason...
-		- Adding include guards to inc/image.h, inc/cmpfloat.h
+		- Adding include guards to inc/image.h, inc/floatutils.h
 - 09/13/2021 -- 7:45pm
-	- sgriffen -- 
+	- sgriffen --
 		- Adding inc/image.h src/image.cpp and test/test-image.cpp. Adds utility function to write 2d rgb array to ppm file
 		- Updating Makefile to compile image function
 - 09/12/2021 -- 4:10pm
-	- sgriffen -- 
-		- Minor tweaks to inc/cmpfloat.h so that macros are formatted similarly
+	- sgriffen --
+		- Minor tweaks to inc/floatutils.h so that macros are formatted similarly
 - 09/12/2021 -- 3:30pm
-	- tcdavis -- 
-		- Updated inc/cmpfloat.h to use !(<) for >= and updated src/v3.cpp to use cmpfloat
+	- tcdavis --
+		- Updated inc/floatutils.h to use !(<) for >= and updated src/v3.cpp to use cmpfloat
 - 09/10/2021 -- 1:45 am
-	- sgriffen -- 
-		- Updated inc/cmpfloat.h to use cpp epsilon
+	- sgriffen --
+		- Updated inc/floatutils.h to use cpp epsilon
 		- Cleaned test/test-cmpfloat.cpp
 - 09/09/2021 -- 11:45pm
-	- sgriffen -- 
-		- Added inc/cmpfloat.h and test/test-cmpfloat.cpp
+	- sgriffen --
+		- Added inc/floatutils.h and test/test-cmpfloat.cpp

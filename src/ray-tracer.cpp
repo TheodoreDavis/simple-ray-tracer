@@ -1,69 +1,196 @@
-#include <inc/sphere.h>
-#include <inc/triangle.h>
-#include <inc/shapeList.h>
-#include <inc/image.h>
-#include <inc/hitRecord.h>
-
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <cmath>
+#include <ctime>
+
+#include <inc/Sphere.h>
+#include <inc/Triangle.h>
+#include <inc/ShapeList.h>
+#include <inc/HitRecord.h>
+#include <inc/image.h>
+
+#define MAX_DEPTH 16
+#define ANTI_ALIASING 4
+#define BG_COLOR V3(0.22,0.424,0.62)
+#define ff 0.3f
+
+V3 getColor(const V3& c, const Ray& r, const Shapelist& shapes, float currIndex, int depth);
+
+V3 diffuseAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currIndex, const Shapelist& shapes, int depth);
+V3 specularAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currIndex, const Shapelist& shapes, int depth);
+V3 glassAlgo(V3& color, const Ray& in, bool flag, const HitRecord& hit, const float indexMat1, const float indexMat2, const Shapelist& shapes, int depth);
+
+V3 dirInUnitCircle(const V3& center);
 
 int main(int argc, char *argv[]) {
-    // TODO if need user imput
+    // TODO if need user input
     // if(argc < 2) {
     //     std::cout << " An example use of this program is as follows:" << std::endl;
     //     std::cout << "./ray-tracer" << std::endl;
     // }
 
     // Origin of all the rays
-    v3 origin = v3(0,0,0);
+    V3 origin = V3(0,0,0);
 
     // Point light in the space
-    v3 pLight = v3(-2,2,1);
+    //V3 pLight = V3(-2,2,1);
 
     // View plane of pixels
-    v3 plane = v3(0,0,1);
-
-    v3 backgroundColor = v3(0.724,0.724,0.724);
+    V3 plane = V3(0,0,1);
 
     //Add shapes into our space
-    //std::vector<shape> shapes;
-    //shapes.push_back(sphere(v3(0,0,2), 1.0));
-    shapelist shapes = shapelist();
-	shapes.add(new triangle(v3(-0.25f,-0.25f,0.5f), v3(-0.0f,-0.25f,0.5f), v3(-0.0f,0.0f,0.5f), material(v3(0.0,255.0,0.0))));
-    shapes.add(new sphere(v3(0,0,4), 2.0));
-    shapes.add(new sphere(v3(.5,0,2.5), 1.0, material(v3(0.7,0.0,0.0))));
+    Shapelist shapes = Shapelist();
+    //shapes.add(new Triangle(V3(-200, 5, 100), V3(200, 5, 100), V3(0, 5, -100), Material(Property::Specular, 0, 0, V3(0.0,0.7,0.0)))); //green specular reflective triangle celing
+    shapes.add(new Sphere(V3(0,0,3), 1.0, Material(Property::Diffuse, V3(.4, .5, .8)))); //blue perfectly diffuse sphere
+    //shapes.add(new Sphere(V3(-2,0,2.9), 1.0, Material(Property::Diffuse, V3(.7, .2, .7)))); //magenta perfectly diffuse sphere
+    //shapes.add(new Sphere(V3(-1,0.75,1.9), 0.5, Material(Property::Glass, V3(.9, .9, .9)))); //glass sphere: index of refrection = 1.4
+    //shapes.add(new Sphere(V3(-3,3,3), 1.0, Material(Property::Specular, .8, .3, V3(.9,.9,.9)))); //fuzzy specular sphere
+    shapes.add(new Sphere(V3(2,0,4.5), 1.0, Material(Property::Specular, .9, 0, V3(.9,.9,.9)))); //clear specular sphere
+    shapes.add(new Triangle(V3(-200, -1, 100), V3(200, -1, 100), V3(0, -1, -100), Material(Property::Diffuse, V3(1.0, 0.4, 0.4)))); //red perfectly diffuse triangle floor
 
     // Image data
-    uint32_t height = 300, width = 400;
-    float unitHeight = 1.5, unitWidth = 2;
-    v3 **image = new v3*[height];
-	
+    uint32_t height = 1500, width = 2000;
+    float unitHeight = 3, unitWidth = 4;
+    float hHeight = unitHeight / 2.0, hWidth = unitWidth / 2.0;
+    float iHeight = 1.0 / height, iWidth = 1.0 / width;
+
+    V3 **image = new V3*[height];
+
+    // init rand seed
+    srand(time(NULL));
+
+    float progPrev = 0;
     for(uint32_t y = 0; y < height; y++) {
-        image[y] = new v3[width];
+        image[y] = new V3[width];
+
+        // print rendering progress
+        float progCurr = (float) y / (float) height;
+        if (FLOAT_EQUAL(progPrev, 0.0)) { progPrev = progCurr; }
+        if(FLOAT_EGREATER(progCurr - progPrev, 0.01)) {
+            printf("image %3d%% - %d/%d lines - rendered\n", (int)(progCurr * 100), y, height);
+            progPrev = progCurr;
+        }
+
         for(uint32_t x = 0; x < width; x++) {
             // Grab dir for the pixel
-            hitRecord rec;
-            v3 dir = v3(plane.x() - unitWidth / 2 + unitWidth * (x + 1) / width,
-                        plane.y() + unitHeight / 2 - unitHeight * (y + 1) / height,
+            V3 color = V3(0,0,0);
+            for(int i=0; i < ANTI_ALIASING; i++) {
+                V3 dir = V3(plane.x() - hWidth + unitWidth * (x + 1) * iWidth + FLOAT_RAND * iWidth,
+                        plane.y() + hHeight - unitHeight * (y + 1) * iHeight - FLOAT_RAND * iHeight,
                         plane.z() - origin.z()).unitVector();
-			
-            if(shapes.intersectionAtRay(ray(origin, dir), rec)) {
-                v3 r = pLight - rec.point();
-                float theta = acos(r.dotProduct(rec.normal()) / r.magnitude());
-                float intensity = (M_PI - theta) * M_1_PI;
 
-                image[y][x] = intensity * rec.getMaterial().color();
-            } else {
-                image[y][x] = backgroundColor;
+                Ray cast = Ray(origin, dir, 1.0);
+                color += getColor(V3(1,1,1), cast, shapes, 1.0, 0);
             }
+            image[y][x] = color / ANTI_ALIASING;
         }
     }
-	
-	image_write_rgb("./out/output", image, height, width);
-	
-	for(uint32_t y = 0; y < height; y++) { delete[] image[y]; }
+    printf("image %3d%% - %d/%d lines - rendered\n", 100, height, height);
+
+	  image_write_rgb("./out/output", image, height, width);
+
+    std::cout << "image wrote to file" << std::endl;
+
+    //TODO - free shape memory
+
+    // free image memory
+	  for(uint32_t y = 0; y < height; y++) { delete[] image[y]; }
     delete[] image;
 
-	return 0;
+    return 0;
+}
+
+V3 getColor(const V3& c, const Ray& r, const Shapelist& shapes, float currIndex, int depth) {
+    // Ray doesn't have enough strength to return the light
+    if(FLOAT_ELESS(c.magnitudeSquared(), 0.05) || depth >= MAX_DEPTH)
+        return V3(0,0,0);
+
+    HitRecord hit;
+
+    if(shapes.intersectionAtRay(r, hit)) {
+        V3 color = c * hit.getMaterial().color();
+        V3 rcolor;
+
+        // Look at diffuse
+        if(hit.getMaterial().property() == Property::Diffuse) {
+            rcolor = diffuseAlgo(color, r, hit, currIndex, shapes, depth + 1);
+        }
+
+        // Look at specular
+        if(hit.getMaterial().property() == Property::Specular) {
+            rcolor = specularAlgo(color, r, hit, currIndex, shapes, depth + 1);
+        }
+
+        // Look at glass
+        if(hit.getMaterial().property() == Property::Glass) {
+            // Exiting object into air
+            if(FLOAT_EQUAL(currIndex, hit.getMaterial().indexOfReflection()))
+                rcolor = glassAlgo(color, r, true, hit, currIndex, 1.0, shapes, depth + 1);
+            else
+                rcolor = glassAlgo(color, r, false, hit, currIndex, hit.getMaterial().indexOfReflection(), shapes, depth + 1);
+        }
+
+        return ff * color + (1.0 - ff) * rcolor;
+    } else {
+        return c * BG_COLOR;
+    }
+}
+
+V3 diffuseAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currIndex, const Shapelist& shapes, int depth) {
+    // physically correct lambertian's are actually easy!
+
+    // create unit sphere centered at point of intersection + unit_normal
+    V3 sCenter = hit.point() + hit.normal();
+    // find a point p0 that's a uniformally distributed point inside the sphere
+    // -- find a point p0 inside the boinding cube (cube with side length 2) of the sphere and check if it's in the sphere
+    V3 p0 = dirInUnitCircle(sCenter);
+    V3 dir = (hit.point() + hit.normal()) + (p0 - hit.normal()).unitVector();
+    Ray out = Ray(hit.point(), dir);
+    return getColor(color, out, shapes, currIndex, depth);
+}
+
+V3 specularAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currIndex, const Shapelist& shapes, int depth) {
+    V3 outDir = in.dir() - 2 * in.dir().dotProduct(hit.normal()) * hit.normal();
+    outDir += hit.getMaterial().fuzz() * dirInUnitCircle(V3(0,0,0));
+    outDir.normalize();
+    Ray out = Ray(hit.point(), outDir);
+    return getColor(color, out, shapes, currIndex, depth);
+}
+
+V3 glassAlgo(V3& color, const Ray& in, bool flag, const HitRecord& hit, const float indexMat1, const float indexMat2, const Shapelist& shapes, int depth) {
+    HitRecord alt_hit = hit;
+
+    // Ray is escaping shape, thus normal is facing the wrong way
+    if(flag)
+        alt_hit.normal() = -alt_hit.normal();
+
+    float cosTheta = alt_hit.normal().dotProduct(-in.dir());
+    float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
+    float ratio = indexMat1 / indexMat2;
+
+    // Schlick's approximation
+    float temp = (1 - ratio) / (1 + ratio);
+    temp *= temp;
+    temp = temp + (1.0 - temp) * pow((1.0-cosTheta), 5);
+    bool schlick = FLOAT_LESS(FLOAT_RAND, temp);
+
+    // Reflect if TIR or Schlicks
+    if(FLOAT_GREATER(ratio * sinTheta, 1.0) || schlick)
+        return specularAlgo(color, in, alt_hit, indexMat1, shapes, depth);
+
+    V3 tperp = ratio * (in.dir() + cosTheta * alt_hit.normal());
+    V3 t = tperp - sqrt(1.0 - tperp.magnitudeSquared()) * alt_hit.normal();
+    Ray out = Ray(hit.point(), t);
+    return getColor(color, out, shapes, indexMat2, depth);
+}
+
+V3 dirInUnitCircle(const V3& center) {
+    V3 p0;
+    do {
+        p0.x() = (center.x() + FLOAT_RAND*2)-1;
+        p0.y() = (center.y() + FLOAT_RAND*2)-1;
+        p0.z() = (center.z() + FLOAT_RAND*2)-1;
+    }   while(FLOAT_GREATER(FLOAT_SQUARE(center.x()-p0.x()) + FLOAT_SQUARE(center.y()-p0.y()) + FLOAT_SQUARE(center.z()-p0.z()), 1.0));
+    return p0;
 }

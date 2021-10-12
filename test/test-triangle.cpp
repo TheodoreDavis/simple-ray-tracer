@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 //	std::cout << std::endl;
 //	std::cout << "--- TESTING SHAPE COLOR ---" << std::endl;
 //	material mat = tri.getMaterial();
-//	testStatus_result = (CMPFLOAT_EQUAL(color.r(), 1.0) && CMPFLOAT_EQUAL(color.g(), 0.4) && CMPFLOAT_EQUAL(color.b(), 0.4)) ? "PASSED" : "FAILED";
+//	testStatus_result = (FLOAT_EQUAL(color.r(), 1.0) && FLOAT_EQUAL(color.g(), 0.4) && FLOAT_EQUAL(color.b(), 0.4)) ? "PASSED" : "FAILED";
 //	std::cout << "color=[" << color << "] :: " << testStatus_result << std::endl;
 	
 	std::cout << std::endl;

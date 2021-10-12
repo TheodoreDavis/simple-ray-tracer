@@ -1,9 +1,9 @@
-#include <inc/ray.h>
+#include <inc/Ray.h>
 
-std::ostream& operator<<(std::ostream& out, const ray &rhs) {
+std::ostream& operator<<(std::ostream& out, const Ray &rhs) {
 	
     out << "{ori=" << rhs.origin_ << "], dir=" << rhs.direction_;
 	return out;
 }
 
-const v3 ray::eval(const float t) { return (origin_ + t * direction_); }
+const V3 Ray::eval(const float t) { return (origin_ + t * direction_); }
