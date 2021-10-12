@@ -1,12 +1,13 @@
 #ifndef _SHAPELIST_
 #define _SHAPELIST_
 
+#include <vector>
+#include <memory>
+
 #include <inc/Shape.h>
 #include <inc/V3.h>
 #include <inc/HitRecord.h>
 #include <inc/floatutils.h>
-#include <vector>
-#include <memory>
 
 class Shapelist {
     private:

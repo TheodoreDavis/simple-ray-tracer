@@ -6,7 +6,7 @@
 
 #include <inc/Ray.h>
 #include <inc/Material.h>
-#include <inc/hitRecord.h>
+#include <inc/HitRecord.h>
 #include <inc/floatutils.h>
 
 class Shape {

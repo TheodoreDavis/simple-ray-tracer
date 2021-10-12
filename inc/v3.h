@@ -1,9 +1,10 @@
 #ifndef _V3_
 #define _V3_
 
-#include <inc/floatutils.h>
 #include <iostream>
 #include <cmath>
+
+#include <inc/floatutils.h>
 
 // Vector class with 3 components with common operations
 class V3 {

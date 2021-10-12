@@ -7,7 +7,7 @@ enum class Property {Specular, Diffuse, Glass};
 
 /**
  * Class for holding light and color information of a shape
- * 
+ *
  * The following data members:
  * specular_ diffuse_ glass_ absorb_
  * should have a sum of 1
@@ -31,7 +31,7 @@ class Material {
             indexOfReflection_ = 0;
             color_ = V3(0.7,0.7,0);
         }
-        
+
         Material(V3 color) {
             property_ = Property::Diffuse;
             fuzz_ = 0;

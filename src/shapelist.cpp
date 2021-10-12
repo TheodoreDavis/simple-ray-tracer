@@ -9,7 +9,7 @@ bool Shapelist::intersectionAtRay(const Ray &casted, HitRecord& rec) const {
     bool flag = false;
 
     rec.t() = 3e38f; // close to the max float val
-    
+
     for(auto& s : shapes_) {
         curr = HitRecord();
         if(s->rayIntersections(casted, curr)) {

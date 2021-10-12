@@ -4,7 +4,6 @@
 #include <inc/V3.h>
 #include <inc/Material.h>
 
-
 /**
  * Class to cotain information about a hittable after checking if a ray has it one
  */
@@ -16,14 +15,14 @@ class HitRecord {
         Material material_;
     public:
         HitRecord() {}
-        
+
         HitRecord(float t, const V3& point, const V3& normal) {
             t_ = t;
             point_ = point;
             normal_ = normal;
             material_ = Material();
         }
-        
+
         HitRecord(float t, const V3& point, const V3& normal, const Material& material) {
             t_ = t;
             point_ = point;

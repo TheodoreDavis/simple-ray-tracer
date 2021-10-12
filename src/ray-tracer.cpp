@@ -1,17 +1,17 @@
-#include <inc/Sphere.h>
-#include <inc/Triangle.h>
-#include <inc/ShapeList.h>
-#include <inc/Image.h>
-#include <inc/HitRecord.h>
-
 #include <iostream>
 #include <iomanip>
 #include <vector>
 #include <cmath>
 #include <ctime>
 
-#define MAX_DEPTH 6
-#define ANTI_ALIASING 20
+#include <inc/Sphere.h>
+#include <inc/Triangle.h>
+#include <inc/ShapeList.h>
+#include <inc/HitRecord.h>
+#include <inc/image.h>
+
+#define MAX_DEPTH 16
+#define ANTI_ALIASING 4
 #define BG_COLOR V3(0.22,0.424,0.62)
 #define ff 0.3f
 
@@ -41,12 +41,13 @@ int main(int argc, char *argv[]) {
 
     //Add shapes into our space
     Shapelist shapes = Shapelist();
-    shapes.add(new Triangle(V3(-7.3, 5, 0), V3(7.3, 5, 0), V3(0, 2, 15), Material(Property::Specular, 0, 0, V3(0.7,0.7,0.7)))); //specular reflective triangle celing
-    shapes.add(new Sphere(V3(0,0,3), 1.0, Material(Property::Diffuse, V3(.4, .5, .8)))); //perfectly diffuse sphere
-    shapes.add(new Sphere(V3(-2,0,2.9), 1.0, Material(Property::Diffuse, V3(.7, .2, .7)))); //perfectly diffuse sphere
-    shapes.add(new Sphere(V3(-3,3,3), 1.0, Material(Property::Specular, .8, .3, V3(.9,.9,.9)))); //fuzzy specular sphere
+    //shapes.add(new Triangle(V3(-200, 5, 100), V3(200, 5, 100), V3(0, 5, -100), Material(Property::Specular, 0, 0, V3(0.0,0.7,0.0)))); //green specular reflective triangle celing
+    shapes.add(new Sphere(V3(0,0,3), 1.0, Material(Property::Diffuse, V3(.4, .5, .8)))); //blue perfectly diffuse sphere
+    //shapes.add(new Sphere(V3(-2,0,2.9), 1.0, Material(Property::Diffuse, V3(.7, .2, .7)))); //magenta perfectly diffuse sphere
+    //shapes.add(new Sphere(V3(-1,0.75,1.9), 0.5, Material(Property::Glass, V3(.9, .9, .9)))); //glass sphere: index of refrection = 1.4
+    //shapes.add(new Sphere(V3(-3,3,3), 1.0, Material(Property::Specular, .8, .3, V3(.9,.9,.9)))); //fuzzy specular sphere
     shapes.add(new Sphere(V3(2,0,4.5), 1.0, Material(Property::Specular, .9, 0, V3(.9,.9,.9)))); //clear specular sphere
-    shapes.add(new Triangle(V3(-200, -1, 100), V3(200, -1, 100), V3(0, -1, -100), Material(Property::Diffuse, V3(1.0, 0.4, 0.4)))); //perfectly diffuse triangle floor
+    shapes.add(new Triangle(V3(-200, -1, 100), V3(200, -1, 100), V3(0, -1, -100), Material(Property::Diffuse, V3(1.0, 0.4, 0.4)))); //red perfectly diffuse triangle floor
 
     // Image data
     uint32_t height = 1500, width = 2000;

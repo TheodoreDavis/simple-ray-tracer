@@ -10,61 +10,61 @@ CC		= g++
 
 all: test release debug
 
-test: test-v3 test-floatutils test-image test-sphere test-triangle
+test: test-V3 test-floatutils test-image test-Sphere test-Triangle
 
-release: src/ray-tracer.cpp obj/v3.o obj/ray.o obj/sphere.o obj/triangle.o obj/image.o obj/shapelist.o
+release: src/ray-tracer.cpp obj/V3.o obj/Ray.o obj/Sphere.o obj/Triangle.o obj/image.o obj/Shapelist.o
 	mkdir -p release
 	$(CC) -Wall -Werror -o release/ray-tracer -I. $^
-	echo done -- made release/ray-tracer.cpp
+	echo done -- made release/ray-tracer
 
-debug: src/ray-tracer.cpp obj/v3.o obj/ray.o obj/sphere.o obj/triangle.o obj/image.o obj/shapelist.o
+debug: src/ray-tracer.cpp obj/V3.o obj/Ray.o obj/Sphere.o obj/Triangle.o obj/image.o obj/Shapelist.o
 	mkdir -p debug
 	$(CC) $(CFLAGS) -o debug/ray-tracer -I. $^
-	echo done -- made debug/ray-tracer.cpp
+	echo done -- made debug/ray-tracer
 
 .PHONY: all clean subdirs $(SUBDIRS)
 
-test-v3: test/test-v3.cpp obj/v3.o
+test-V3: test/test-V3.cpp obj/V3.o
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
-	echo done -- made bin/test-v3
+	echo done -- made bin/test-V3
 
 test-float: inc/floatutils.h test/test-floatutils.cpp
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
 	echo done -- made bin/test-floatutils
 
-test-image: test/test-image.cpp obj/image.o obj/v3.o
+test-image: test/test-image.cpp obj/image.o obj/V3.o
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
 	echo done -- made bin/test-image
 
-test-sphere: test/test-sphere.cpp obj/sphere.o obj/ray.o obj/v3.o
+test-Sphere: test/test-Sphere.cpp obj/Sphere.o obj/Ray.o obj/V3.o
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
-	echo done -- made bin/test-sphere
+	echo done -- made bin/test-Sphere
 
-test-triangle: test/test-triangle.cpp obj/triangle.o obj/ray.o obj/v3.o
+test-Triangle: test/test-Triangle.cpp obj/Triangle.o obj/Ray.o obj/V3.o
 	$(CC) $(CFLAGS) -o bin/$@ -I. $^
-	echo done -- made bin/test-triangle
+	echo done -- made bin/test-Triangle
 
 #####################################################################
 # Source Files
 #####################################################################
 
-obj/v3.o: inc/v3.h src/v3.cpp subdirs
-	$(CC) $(CFLAGS) -c -o $@ -I. src/v3.cpp
+obj/V3.o: inc/V3.h src/V3.cpp subdirs
+	$(CC) $(CFLAGS) -c -o $@ -I. src/V3.cpp
 
-obj/ray.o: inc/ray.h src/ray.cpp subdirs
-	$(CC) $(CFLAGS) -c -o $@ -I. src/ray.cpp
+obj/Ray.o: inc/Ray.h src/Ray.cpp subdirs
+	$(CC) $(CFLAGS) -c -o $@ -I. src/Ray.cpp
 
 obj/image.o: inc/image.h src/image.cpp subdirs
 	$(CC) $(CFLAGS) -c -o $@ -I. src/image.cpp
 
-obj/sphere.o: inc/shape.h inc/sphere.h src/sphere.cpp subdirs
-	$(CC) $(CFLAGS) -c -o $@ -I. src/sphere.cpp
+obj/Sphere.o: inc/Shape.h inc/Sphere.h src/Sphere.cpp subdirs
+	$(CC) $(CFLAGS) -c -o $@ -I. src/Sphere.cpp
 
-obj/triangle.o: inc/shape.h inc/triangle.h src/triangle.cpp subdirs
-	$(CC) $(CFLAGS) -c -o $@ -I. src/triangle.cpp
+obj/Triangle.o: inc/Shape.h inc/Triangle.h src/Triangle.cpp subdirs
+	$(CC) $(CFLAGS) -c -o $@ -I. src/Triangle.cpp
 
-obj/shapelist.o: inc/shape.h inc/shapelist.h src/shapelist.cpp subdirs
-	$(CC) $(CFLAGS) -c -o $@ -I. src/shapelist.cpp
+obj/Shapelist.o: inc/Shape.h inc/ShapeList.h src/ShapeList.cpp subdirs
+	$(CC) $(CFLAGS) -c -o $@ -I. src/ShapeList.cpp
 
 subdirs: $(SUBDIRS)
 
