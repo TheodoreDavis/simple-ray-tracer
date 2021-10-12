@@ -5,7 +5,6 @@
 		- Changed demo scene to meet assignment specifications
 		- Updated README.md with new description and descriptions on how to change scene, camera location, maximum recursion depth, and the sampling rate
 		- Submitted assignment 2
-
 10/10/2021 --11:50am
 	- sgriffen --
 		- Fixed problems in diffuse algorithm
