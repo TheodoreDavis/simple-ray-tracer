@@ -1,14 +1,19 @@
-10/11/2021 -- 7:55pm
+- 10/25/2021 -- 12:10am
+	- sgriffen --
+		- Added Camera.h class
+		- Added Light property to material
+		- Other QoL improvements
+- 10/11/2021 -- 7:55pm
 	- sgriffen --
 		- Fixed pyrite-specific build errors
 			- Capitalized all class definition and implementation files
 		- Changed demo scene to meet assignment specifications
 		- Updated README.md with new description and descriptions on how to change scene, camera location, maximum recursion depth, and the sampling rate
 		- Submitted assignment 2
-10/10/2021 --11:50am
+- 10/10/2021 --11:50am
 	- sgriffen --
 		- Fixed problems in diffuse algorithm
-10/9/2021 -- 8:15 pm
+- 10/9/2021 -- 8:15 pm
 	- sgriffen --
 		- Renamed cmpfloat.h to floatutils.h
 			- Renamed all cmpfloat_ macros to float_

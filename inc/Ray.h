@@ -13,7 +13,11 @@ class Ray {
 		/*
 			constructors
 		*/
-		Ray() {  }
+		Ray() {
+			this->origin_ = V3(0, 0, 0);
+			this->direction_ = V3(0, 0, 1);
+			this->intensity_ = 1.0f;
+		}
 		Ray(V3 origin, V3 direction) {
 
 			this->origin_ = origin;

@@ -1,8 +1,7 @@
 #include <inc/Ray.h>
 
 std::ostream& operator<<(std::ostream& out, const Ray &rhs) {
-	
-    out << "{ori=" << rhs.origin_ << "], dir=" << rhs.direction_;
+    out << "{ori=" << rhs.origin_ << ", dir=" << rhs.direction_ << "}";
 	return out;
 }
 

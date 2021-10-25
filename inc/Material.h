@@ -3,7 +3,7 @@
 
 #include <inc/V3.h>
 
-enum class Property {Specular, Diffuse, Glass, Light};
+enum class Property { Specular, Diffuse, Glass, Light };
 
 /**
  * Class for holding light and color information of a shape

@@ -9,6 +9,7 @@
 #include <inc/Triangle.h>
 #include <inc/ShapeList.h>
 #include <inc/HitRecord.h>
+#include <inc/Camera.h>
 #include <inc/image.h>
 
 #define MAX_DEPTH 16
@@ -21,6 +22,7 @@ V3 getColor(const V3& c, const Ray& r, const Shapelist& shapes, float currIndex,
 V3 diffuseAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currIndex, const Shapelist& shapes, int depth);
 V3 specularAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currIndex, const Shapelist& shapes, int depth);
 V3 glassAlgo(V3& color, const Ray& in, bool flag, const HitRecord& hit, const float indexMat1, const float indexMat2, const Shapelist& shapes, int depth);
+V3 lightAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currIndex, const Shapelist& shapes, int depth);
 
 V3 pointInUnitCircle(const V3& center, float limit = 1.0f);
 
@@ -30,6 +32,9 @@ int main(int argc, char *argv[]) {
     //     std::cout << " An example use of this program is as follows:" << std::endl;
     //     std::cout << "./ray-tracer" << std::endl;
     // }
+
+	// scene Camera
+	//Camera camera = Camera();
 
     // Origin of all the rays
     V3 origin = V3(0,0,0);
@@ -46,9 +51,9 @@ int main(int argc, char *argv[]) {
     shapes.add(new Sphere(V3(0,0,3), 1.0, Material(Property::Diffuse, V3(.4, .5, .8)))); //blue perfectly diffuse sphere
     shapes.add(new Sphere(V3(-2,0,2.9), 1.0, Material(Property::Diffuse, V3(.7, .2, .7)))); //magenta perfectly diffuse sphere
     //shapes.add(new Sphere(V3(-0.7,0.7,1.9), 0.5, Material(Property::Glass, 1.4, V3(.9, .9, .9)))); //glass sphere: index of refrection = 1.4
-    shapes.add(new Triangle(V3(-1.5, 0.4, 1.9), V3(1.5, 0.3, 1.9), V3(0, 1.4, 1.9), Material(Property::Glass, 1.0, V3(0.9, 0.9, 0.9)))); // glass triangle: index of refraction = 1.4
-    //shapes.add(new Sphere(V3(-3,3,3), 1.0, Material(Property::Specular, 0.9, V3(.9,.9,.9)))); //fuzzy specular sphere
-    //shapes.add(new Sphere(V3(2,0,4.5), 1.0, Material(Property::Specular, 0.0, V3(.9,.9,.9)))); //clear specular sphere
+    //shapes.add(new Triangle(V3(-1.5, 0.4, 1.9), V3(1.5, 0.3, 1.9), V3(0, 1.4, 1.9), Material(Property::Glass, 1.0, V3(0.9, 0.9, 0.9)))); // glass triangle: index of refraction = 1.4
+    shapes.add(new Sphere(V3(-3,3,3), 1.0, Material(Property::Specular, 0.9, V3(.9,.9,.9)))); //fuzzy specular sphere
+    shapes.add(new Sphere(V3(2,0,4.5), 1.0, Material(Property::Light, V3(1,1,1)))); //white light sphere
     shapes.add(new Triangle(V3(-200, -1, 100), V3(200, -1, 100), V3(0, -1, -100), Material(Property::Diffuse, V3(1.0, 0.4, 0.4)))); //red perfectly diffuse triangle floor
 
     // Image data
@@ -90,9 +95,9 @@ int main(int argc, char *argv[]) {
     }
     printf("image %3d%% - %d/%d lines - rendered\n", 100, height, height);
 
-	  image_write_rgb("./out/output", image, height, width);
+	image_write_rgb("./out/output", image, height, width);
 
-    std::cout << "image wrote to file" << std::endl;
+	std::cout << "image wrote to file" << std::endl;
 
     //TODO - free shape memory
 
@@ -115,14 +120,10 @@ V3 getColor(const V3& c, const Ray& r, const Shapelist& shapes, float currIndex,
         V3 rcolor;
 
         // Look at diffuse
-        if(hit.material().property() == Property::Diffuse) {
-            rcolor = diffuseAlgo(color, r, hit, currIndex, shapes, depth + 1);
-        }
+        if(hit.material().property() == Property::Diffuse) { rcolor = diffuseAlgo(color, r, hit, currIndex, shapes, depth + 1); }
 
         // Look at specular
-        if(hit.material().property() == Property::Specular) {
-            rcolor = specularAlgo(color, r, hit, currIndex, shapes, depth + 1);
-        }
+        if(hit.material().property() == Property::Specular) { rcolor = specularAlgo(color, r, hit, currIndex, shapes, depth + 1); }
 
         // Look at glass
         if(hit.material().property() == Property::Glass) {
@@ -133,10 +134,12 @@ V3 getColor(const V3& c, const Ray& r, const Shapelist& shapes, float currIndex,
                 rcolor = glassAlgo(color, r, false, hit, currIndex, hit.material().indexOfReflection(), shapes, depth + 1);
         }
 
+		// Look at light
+		if(hit.material().property() == Property::Light) { rcolor = lightAlgo(color, r, hit, currIndex, shapes, depth + 1); }
+
         return ff * color + (1.0 - ff) * rcolor;
-    } else {
-        return c * BG_COLOR;
     }
+	else { return c * BG_COLOR; }
 }
 
 V3 diffuseAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currIndex, const Shapelist& shapes, int depth) {
@@ -180,12 +183,19 @@ V3 glassAlgo(V3& color, const Ray& in, bool flag, const HitRecord& hit, const fl
 
     // Reflect if TIR or Schlicks
     if(FLOAT_GREATER(ratio * sinTheta, 1.0) || schlick)
-        return specularAlgo(color, in, alt_hit, indexMat1, shapes, depth);
+    	return specularAlgo(color, in, alt_hit, indexMat1, shapes, depth);
 
     V3 tperp = ratio * (in.dir() + cosTheta * alt_hit.normal());
     V3 t = tperp - sqrt(1.0 - tperp.magnitudeSquared()) * alt_hit.normal();
     Ray out = Ray(hit.point(), t);
     return getColor(color, out, shapes, indexMat2, depth);
+}
+
+V3 lightAlgo(V3& color, const Ray& in, const HitRecord& hit, const float currIndex, const Shapelist& shapes, int depth) {
+    V3 outDir = in.dir() - 2 * in.dir().dotProduct(hit.normal()) * hit.normal();
+    outDir.normalize();
+    Ray out = Ray(hit.point(), outDir);
+    return getColor(hit.material().color(), out, shapes, currIndex, depth);
 }
 
 V3 pointInUnitCircle(const V3& center, float limit) {
