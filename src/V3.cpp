@@ -260,3 +260,14 @@ V3& V3::normalize() {
 
     return *this;
 }
+
+V3 V3::pointInUnitCircle() {
+
+    V3 p0;
+    do {
+        p0.x() = (std::clamp((float)(FLOAT_RAND), 1e-5f, 1.0f)*2)-1;
+        p0.y() = (std::clamp((float)(FLOAT_RAND), 1e-5f, 1.0f)*2)-1;
+        p0.z() = (std::clamp((float)(FLOAT_RAND), 1e-5f, 1.0f)*2)-1;
+    }   while(FLOAT_GREATER(FLOAT_SQUARE(p0.x()) + FLOAT_SQUARE(p0.y()) + FLOAT_SQUARE(p0.z()), 1.0));
+    return p0;
+}

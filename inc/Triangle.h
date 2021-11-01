@@ -17,17 +17,22 @@ class Triangle : public Shape {
 			this->a_ = a;
 			this->b_ = b;
 			this->c_ = c;
-			this->material_ = Material(V3(1.0f, 0.4f, 0.4f));  //color is pastel red
+			this->material_ = new Diffuse(V3(1.0f, 0.4f, 0.4f));  //color is pastel red
 
 			this->norm_ = ((V3)(b - a)).crossProduct(c - a);
 		}
-		Triangle(V3 a, V3 b, V3 c, Material mat) {
+
+		Triangle(V3 a, V3 b, V3 c, Material* mat) {
 			this->a_ = a;
 			this->b_ = b;
 			this->c_ = c;
 			this->material_ = mat;
 
 			this->norm_ = ((V3)(b - a)).crossProduct(c - a);
+		}
+
+		~Triangle() {
+			delete material_;
 		}
 
 		/*
