@@ -5,7 +5,11 @@ std::ostream& operator<<(std::ostream& out, const Camera &rhs) {
 	return out;
 }
 
-const V3 Camera::eval(const Ray ray, const float t, const uint32_t y, const uint32_t x) {
-	V3 r = ray.ori() + t * (upperleft_ + x * horizontal_ - y * vertical_ - position_);
-	return (const V3)r;
+const Ray Camera::get_ray(const uint32_t y, const uint32_t x) {
+	float y_norm = ((float)y) / height_;
+	float x_norm = ((float)x) / width_;
+
+	V3 dir = upperleft_ + (x_norm * horizontal_) - (y_norm * vertical_) - position_;
+	Ray r = Ray(position_, dir);
+	return (const Ray)r;
 }
