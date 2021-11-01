@@ -12,19 +12,23 @@ class Sphere : public Shape {
         Sphere(V3 center) {
             center_ = center;
             radius_ = 1.0;
-            material_ = Material(V3(0.392, 0.584, 0.929));
+            material_ = new Diffuse(V3(0.392, 0.584, 0.929));
         }
         
         Sphere(V3 center, float radius) {
             center_ = center;
             radius_ = radius;
-            material_ = Material(V3(0.392, 0.584, 0.929));
+            material_ = new Diffuse(V3(0.392, 0.584, 0.929));
         }
 
-        Sphere(V3 center, float radius, Material material) {
+        Sphere(V3 center, float radius, Material* material) {
             center_ = center;
             radius_ = radius;
             material_ = material;
+        }
+
+        ~Sphere() {
+            delete material_;
         }
 
         friend std::ostream& operator<<(std::ostream& out, const Sphere& rhs);

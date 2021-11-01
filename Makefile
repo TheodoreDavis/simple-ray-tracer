@@ -13,12 +13,12 @@ all: test release debug
 
 test: test-V3 test-Sphere test-Triangle test-image test-floatutils
 
-release: main.cpp obj/V3.o obj/Ray.o obj/Sphere.o obj/Triangle.o obj/ShapeList.o obj/Camera.o obj/image.o
+release: main.cpp obj/V3.o obj/Ray.o obj/Material.o obj/Sphere.o obj/Triangle.o obj/ShapeList.o obj/Camera.o obj/image.o
 	mkdir -p release
 	$(CC) $(CFLAGS_RELEASE) -o release/cs336-raytracer -I. $^
 	echo done -- made $@/cs336-raytracer
 
-debug: main.cpp obj/V3.o obj/Ray.o obj/Sphere.o obj/Triangle.o obj/ShapeList.o obj/Camera.o obj/image.o
+debug: main.cpp obj/V3.o obj/Ray.o obj/Material.o obj/Sphere.o obj/Triangle.o obj/ShapeList.o obj/Camera.o obj/image.o
 	mkdir -p debug
 	$(CC) $(CFLAGS_DEBUG) -o debug/cs336-raytracer -I. $^
 	echo done -- made $@/cs336-raytracer
@@ -61,11 +61,15 @@ obj/image.o: inc/image.h src/image.cpp subdirs
 	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/image.cpp
 	echo made $@
 
-obj/Sphere.o: inc/Shape.h inc/Sphere.h src/Sphere.cpp subdirs
+obj/Material.o: inc/Material.h src/Material.cpp subdirs
+	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/Material.cpp
+	echo made $@
+
+obj/Sphere.o: inc/Shape.h inc/Sphere.h src/Sphere.cpp obj/Material.o subdirs
 	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/Sphere.cpp
 	echo made $@
 
-obj/Triangle.o: inc/Shape.h inc/Triangle.h src/Triangle.cpp subdirs
+obj/Triangle.o: inc/Shape.h inc/Triangle.h src/Triangle.cpp obj/Material.o subdirs
 	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/Triangle.cpp
 	echo made $@
 

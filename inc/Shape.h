@@ -11,13 +11,12 @@
 
 class Shape {
     protected:
-        Material material_;
+        Material *material_;
 
     public:
         Shape() {}
-
-        Material material() const {return material_;}
-        Material& material() {return material_;}
+        virtual ~Shape() = 0;
+        Material* material() {return material_;}
 
         /**
          * Returns the number of intersections that a Ray casted

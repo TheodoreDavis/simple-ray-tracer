@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 
 #include <inc/floatutils.h>
 
@@ -77,6 +78,8 @@ class V3 {
         float const distanceSquared(const V3& rhs) const;
         V3 const unitVector() const;
         V3& normalize(); //TODO? convert *this to a unit vector
+
+        static V3 pointInUnitCircle();
 
         // math
         friend float sqrt(float x);
