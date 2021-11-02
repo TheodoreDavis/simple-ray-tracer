@@ -42,7 +42,7 @@ bool const Sphere::rayIntersections(const Ray &casted, HitRecord& rec) {
     }
 
     rec.point() = r.ori() + rec.t() * r.dir();
-    *rec.material() = *material_;
+    *rec.material() = material_;
 
     rec.normal() = rec.point() - center_;
     rec.normal().normalize();

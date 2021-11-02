@@ -38,7 +38,7 @@ const bool Triangle::rayIntersections(const Ray &casted, HitRecord& rec) {
 		//populate hit-record
 		rec.t() = t;
 		rec.point() = p;
-		*rec.material() = *material_;
+		*rec.material() = material_;
 		rec.normal() = norm_;
 		rec.normal().normalize();
 

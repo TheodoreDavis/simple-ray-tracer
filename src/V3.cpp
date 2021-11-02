@@ -247,6 +247,10 @@ float const V3::distanceSquared(const V3& rhs) const {
            (v[2] - rhs.v[2]) * (v[2] - rhs.v[2]);
 }
 
+V3 V3::reflect(const V3& rhs) const {
+    return *this - 2 * this->dotProduct(rhs) * rhs;
+}
+
 V3 const V3::unitVector() const {
     float m = this->magnitude();
     return V3(v[0] / m, v[1] / m, v[2] / m);

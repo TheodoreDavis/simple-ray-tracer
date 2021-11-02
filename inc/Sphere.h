@@ -27,10 +27,6 @@ class Sphere : public Shape {
             material_ = material;
         }
 
-        ~Sphere() {
-            delete material_;
-        }
-
         friend std::ostream& operator<<(std::ostream& out, const Sphere& rhs);
 
         bool const rayIntersections(const Ray &casted, HitRecord& rec);

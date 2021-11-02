@@ -49,35 +49,35 @@ test-floatutils: inc/floatutils.h test/test-floatutils.cpp
 # Source Files
 #####################################################################
 
-obj/V3.o: inc/V3.h src/V3.cpp subdirs
+obj/V3.o: inc/V3.h src/V3.cpp
 	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/V3.cpp
 	echo made $@
 
-obj/Ray.o: inc/Ray.h src/Ray.cpp subdirs
+obj/Ray.o: inc/Ray.h src/Ray.cpp
 	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/Ray.cpp
 	echo made $@
 
-obj/image.o: inc/image.h src/image.cpp subdirs
+obj/image.o: inc/image.h src/image.cpp
 	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/image.cpp
 	echo made $@
 
-obj/Material.o: inc/Material.h src/Material.cpp subdirs
+obj/Material.o: inc/Material.h src/Material.cpp
 	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/Material.cpp
 	echo made $@
 
-obj/Sphere.o: inc/Shape.h inc/Sphere.h src/Sphere.cpp obj/Material.o subdirs
+obj/Sphere.o: inc/Shape.h inc/Sphere.h src/Sphere.cpp obj/Material.o
 	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/Sphere.cpp
 	echo made $@
 
-obj/Triangle.o: inc/Shape.h inc/Triangle.h src/Triangle.cpp obj/Material.o subdirs
+obj/Triangle.o: inc/Shape.h inc/Triangle.h src/Triangle.cpp obj/Material.o
 	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/Triangle.cpp
 	echo made $@
 
-obj/ShapeList.o: inc/Shape.h inc/ShapeList.h src/ShapeList.cpp subdirs
+obj/ShapeList.o: inc/Shape.h inc/ShapeList.h src/ShapeList.cpp
 	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/ShapeList.cpp
 	echo made $@
 
-obj/Camera.o: inc/Camera.h src/Camera.cpp subdirs
+obj/Camera.o: inc/Camera.h src/Camera.cpp
 	$(CC) $(CFLAGS_DEBUG) -c -o $@ -I. src/Camera.cpp
 	echo made $@
 

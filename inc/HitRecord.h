@@ -13,7 +13,7 @@ class HitRecord {
         float t_;
         V3 point_;
         V3 normal_;
-        Material *material_;
+        Material* material_;
     public:
         HitRecord() {}
 
@@ -33,7 +33,7 @@ class HitRecord {
         V3 normal() const {return normal_;}
         V3& normal() {return normal_;}
 
-        Material* material() {return material_;}
+        Material** material() {return &material_;}
 
         HitRecord& operator=(HitRecord rhs) {
             t_ = rhs.t_;

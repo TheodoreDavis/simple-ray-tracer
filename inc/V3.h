@@ -76,6 +76,7 @@ class V3 {
         float const magnitudeSquared() const;
         float const distance(const V3& rhs) const;
         float const distanceSquared(const V3& rhs) const;
+        V3 reflect(const V3& rhs) const;
         V3 const unitVector() const;
         V3& normalize(); //TODO? convert *this to a unit vector
 

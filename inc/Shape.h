@@ -11,11 +11,14 @@
 
 class Shape {
     protected:
-        Material *material_;
+        Material* material_;
 
     public:
         Shape() {}
-        virtual ~Shape() = 0;
+        virtual ~Shape() {
+            delete material_;
+        }
+
         Material* material() {return material_;}
 
         /**

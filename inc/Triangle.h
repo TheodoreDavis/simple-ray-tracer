@@ -31,10 +31,6 @@ class Triangle : public Shape {
 			this->norm_ = ((V3)(b - a)).crossProduct(c - a);
 		}
 
-		~Triangle() {
-			delete material_;
-		}
-
 		/*
 			i/o functions
 		*/
