@@ -12,9 +12,12 @@ class Camera {
 		uint32_t height_;
 		uint32_t width_;
 		V3 position_;
+		V3 lookat_;
 		V3 horizontal_;
 		V3 vertical_;
 		V3 upperleft_;
+		float fieldofview_;
+		float aspectratio_;
 	public:
 		/*
 			constructors
@@ -22,7 +25,7 @@ class Camera {
 		Camera(uint32_t h, uint32_t w) {
 			V3 pos = V3(0, 0, 0);
 			V3 lookat = V3(0, 0, 1); // direction to look at
-			V3 up = V3(0, -1, 0); // "up" direction
+			V3 up = V3(0, 1, 0); // "up" direction
 			float fov = 210.0; // field-of-view (in degrees)
 			float ar = ((float)w) / h; // aspect ratio
 
@@ -31,13 +34,16 @@ class Camera {
 
 			V3 z = (lookat - pos).unitVector();
 			V3 y = up.unitVector();
-			V3 x = z.crossProduct(y);
+			V3 x = -(z.crossProduct(y));
 			float theta = (fov * (M_PI / 180.0)) / 2;
 
 			this->position_ = pos;
+			this->lookat_ = lookat;
 			this->vertical_ = 2 * tan(theta) * y;
 			this->horizontal_ = 2 * tan(theta) * ar * x;
 			this->upperleft_ = this->position_ + z + (this->vertical_ / 2) - (this->horizontal_ / 2);
+			this->fieldofview_ = fov;
+			this->aspectratio_ = ar;
 		}
 		Camera(uint32_t h, uint32_t w, V3 pos, V3 lookat, V3 up) {
 			float fov = 210.0; // field-of-view (in degrees)
@@ -49,9 +55,12 @@ class Camera {
 			float theta = (fov * (M_PI / 180.0)) / 2;
 
 			this->position_ = pos;
+			this->lookat_ = lookat;
 			this->vertical_ = 2 * tan(theta) * y;
 			this->horizontal_ = 2 * tan(theta) * ar * x;
 			this->upperleft_ = this->position_ + z + (this->vertical_ / 2) - (this->horizontal_ / 2);
+			this->fieldofview_ = fov;
+			this->aspectratio_ = ar;
 		}
 		Camera(uint32_t h, uint32_t w, V3 pos, V3 lookat, V3 up, float fov, float ar) {
 			V3 z = (lookat - pos).unitVector();
@@ -60,9 +69,12 @@ class Camera {
 			float theta = (fov * (M_PI / 180.0)) / 2;
 
 			this->position_ = pos;
+			this->lookat_ = lookat;
 			this->vertical_ = 2 * tan(theta) * y;
 			this->horizontal_ = 2 * tan(theta) * ar * x;
 			this->upperleft_ = this->position_ + z + (this->vertical_ / 2) - (this->horizontal_ / 2);
+			this->fieldofview_ = fov;
+			this->aspectratio_ = ar;
 		}
 
 		/*
@@ -74,12 +86,18 @@ class Camera {
 		uint32_t& w() { return this->width_; }
 		V3 pos() const { return this->position_; }
 		V3& pos() { return this->position_; }
+		V3 lookat() const { return this->lookat_; }
+		V3& lookat() { return this->lookat_; }
 		V3 hor() const { return this->horizontal_; }
 		V3& hor() { return this->horizontal_; }
 		V3 vert() const { return this->vertical_; }
 		V3& vert() { return this->vertical_; }
 		V3 ul() const { return this->upperleft_; }
 		V3& ul() { return this->upperleft_; }
+		float fov() const { return this->fieldofview_; }
+		float& fov() { return this->fieldofview_; }
+		float ar() const { return this->aspectratio_; }
+		float& ar() { return this->aspectratio_; }
 
 		/*
 			i/o functions
