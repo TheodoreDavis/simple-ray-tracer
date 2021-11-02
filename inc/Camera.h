@@ -9,6 +9,8 @@
 
 class Camera {
 	private:
+		uint32_t height_;
+		uint32_t width_;
 		V3 position_;
 		V3 horizontal_;
 		V3 vertical_;
@@ -17,52 +19,62 @@ class Camera {
 		/*
 			constructors
 		*/
-		Camera() {
+		Camera(uint32_t h, uint32_t w) {
 			V3 pos = V3(0, 0, 0);
 			V3 lookat = V3(0, 0, 1); // direction to look at
-			V3 up = V3(0, 1, 0); // "up" direction
+			V3 up = V3(0, -1, 0); // "up" direction
 			float fov = 210.0; // field-of-view (in degrees)
-			float ar = 1.0; // aspect ratio
+			float ar = ((float)w) / h; // aspect ratio
+
+			this->height_ = h;
+			this->width_ = w;
 
 			V3 z = (lookat - pos).unitVector();
 			V3 y = up.unitVector();
 			V3 x = z.crossProduct(y);
-			float theta = (fov * M_PI) / (180 * 2);
+			float theta = fov * (M_PI / 180.0);
+			theta = theta / 2;
 
 			this->position_ = pos;
 			this->vertical_ = 2 * tan(theta) * y;
 			this->horizontal_ = 2 * tan(theta) * ar * x;
-			this->upperleft_ = this->position_ + z + this->vertical_ / 2 - this->horizontal_ / 2;
+			this->upperleft_ = this->position_ + z + (this->vertical_) / 2 - (this->horizontal_ / 2);
 		}
-		Camera(V3 pos, V3 lookat, V3 up) {
-			const float fov = 210.0; // field-of-view (in degrees)
-			const float ar = 1.0; // aspect ratio
+		Camera(uint32_t h, uint32_t w, V3 pos, V3 lookat, V3 up) {
+			float fov = 210.0; // field-of-view (in degrees)
+			float ar = ((float)w) / h; // aspect ratio
 
 			V3 z = (lookat - pos).unitVector();
 			V3 y = up.unitVector();
 			V3 x = z.crossProduct(y);
-			float theta = (fov * M_PI) / (180 * 2);
+			float theta = fov * (M_PI / 180.0);
+			theta = theta / 2;
 
 			this->position_ = pos;
 			this->vertical_ = 2 * tan(theta) * y;
 			this->horizontal_ = 2 * tan(theta) * ar * x;
-			this->upperleft_ = this->position_ + z + this->vertical_ / 2 - this->horizontal_ / 2;
+			this->upperleft_ = this->position_ + z + (this->vertical_ / 2) - (this->horizontal_ / 2);
 		}
-		Camera(V3 pos, V3 lookat, V3 up, float fov, float ar) {
+		Camera(uint32_t h, uint32_t w, V3 pos, V3 lookat, V3 up, float fov, float ar) {
 			V3 z = (lookat - pos).unitVector();
 			V3 y = up.unitVector();
 			V3 x = z.crossProduct(y);
-			float theta = (fov * M_PI) / (180 * 2);
+			float theta = fov * (M_PI / 180.0);
+			theta = theta / 2;
 
 			this->position_ = pos;
 			this->vertical_ = 2 * tan(theta) * y;
 			this->horizontal_ = 2 * tan(theta) * ar * x;
-			this->upperleft_ = this->position_ + z + this->vertical_ / 2 - this->horizontal_ / 2;
+			this->upperleft_ = this->position_ + z + (this->vertical_ / 2) - (this->horizontal_ / 2);
 		}
 
 		/*
 			accessors
 		*/
+		uint32_t h() const { return this->height_; }
+		uint32_t& h() { return this->height_; }
+		uint32_t w() const { return this->width_; }
+		uint32_t& w() { return this->width_; }
 		V3 pos() const { return this->position_; }
 		V3& pos() { return this->position_; }
 		V3 hor() const { return this->horizontal_; }
@@ -80,7 +92,7 @@ class Camera {
 		/*
 			utility functions
 		*/
-		const V3 eval(const Ray ray, const float t, const uint32_t y, const uint32_t x);
+		const Ray get_ray(const uint32_t y, const uint32_t x);
 };
 
 #endif
