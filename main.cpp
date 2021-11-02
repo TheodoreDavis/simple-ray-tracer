@@ -12,11 +12,10 @@
 #include <inc/Camera.h>
 #include <inc/image.h>
 
-#define MAX_DEPTH 50
-#define ANTI_ALIASING 15
+#define MAX_DEPTH 20
+#define ANTI_ALIASING 4
 //#define BG_COLOR V3(0.39,0.58,0.92)
 #define BG_COLOR V3(0.95,0.5,0.3)
-#define ff 0.3f
 
 V3 getColor(const Ray& r, const Shapelist& shapes, int depth);
 
@@ -49,7 +48,7 @@ int main(int argc, char *argv[]) {
     //V3 pLight = V3(-2,2,1);
 
 	// scene Camera
-	Camera camera = Camera(height, width);
+	Camera camera = Camera(height, width, V3(0,0,0), V3(0,0,1), V3(0,1,0));
 	std::cout << camera << std::endl;
 
 	// Origin of all the rays

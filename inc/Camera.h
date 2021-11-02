@@ -24,22 +24,22 @@ class Camera {
 		*/
 		Camera(uint32_t h, uint32_t w) {
 			V3 pos = V3(0, 0, 0);
-			V3 lookat = V3(0, 0, 1); // direction to look at
-			V3 up = V3(0, 1, 0); // "up" direction
+			V3 lookat = V3(0, 0, 1); // direction to look at (Center of the viewing plane)
+			V3 up = V3(0, 1, 0); // "up" direction (The 'roll' the camera)
 			float fov = 210.0; // field-of-view (in degrees)
 			float ar = ((float)w) / h; // aspect ratio
 
 			this->height_ = h;
 			this->width_ = w;
 
-			V3 z = (lookat - pos).unitVector();
-			V3 y = up.unitVector();
-			V3 x = -(z.crossProduct(y));
-			float theta = (fov * (M_PI / 180.0)) / 2;
+			V3 z = (lookat - pos).unitVector(); //dir to center of view plane
+			V3 y = up.unitVector(); //dir of up
+			V3 x = (z.crossProduct(y)); //angle between z and y
+			float theta = fov * M_PI_2 / 180.0; // half the viewing angle in radians
 
 			this->position_ = pos;
 			this->lookat_ = lookat;
-			this->vertical_ = 2 * tan(theta) * y;
+			this->vertical_ = -2 * tan(theta) * y; 
 			this->horizontal_ = 2 * tan(theta) * ar * x;
 			this->upperleft_ = this->position_ + z + (this->vertical_ / 2) - (this->horizontal_ / 2);
 			this->fieldofview_ = fov;
@@ -49,6 +49,9 @@ class Camera {
 			float fov = 210.0; // field-of-view (in degrees)
 			float ar = ((float)w) / h; // aspect ratio
 
+			this->height_ = h;
+			this->width_ = w;
+
 			V3 z = (lookat - pos).unitVector();
 			V3 y = up.unitVector();
 			V3 x = z.crossProduct(y);
@@ -56,13 +59,16 @@ class Camera {
 
 			this->position_ = pos;
 			this->lookat_ = lookat;
-			this->vertical_ = 2 * tan(theta) * y;
+			this->vertical_ = -2 * tan(theta) * y;
 			this->horizontal_ = 2 * tan(theta) * ar * x;
 			this->upperleft_ = this->position_ + z + (this->vertical_ / 2) - (this->horizontal_ / 2);
 			this->fieldofview_ = fov;
 			this->aspectratio_ = ar;
 		}
 		Camera(uint32_t h, uint32_t w, V3 pos, V3 lookat, V3 up, float fov, float ar) {
+			this->height_ = h;
+			this->width_ = w;
+
 			V3 z = (lookat - pos).unitVector();
 			V3 y = up.unitVector();
 			V3 x = z.crossProduct(y);
@@ -70,7 +76,7 @@ class Camera {
 
 			this->position_ = pos;
 			this->lookat_ = lookat;
-			this->vertical_ = 2 * tan(theta) * y;
+			this->vertical_ = -2 * tan(theta) * y;
 			this->horizontal_ = 2 * tan(theta) * ar * x;
 			this->upperleft_ = this->position_ + z + (this->vertical_ / 2) - (this->horizontal_ / 2);
 			this->fieldofview_ = fov;

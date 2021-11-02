@@ -7,10 +7,11 @@ std::ostream& operator<<(std::ostream& out, const Camera &rhs) {
 
 const Ray Camera::get_ray(const uint32_t y, const uint32_t x) {
 
-	float y_norm = (((float)y) / height_) + FLOAT_RAND_RANGE(0.0005, 0.0005);
-	float x_norm = (((float)x) / width_) + FLOAT_RAND_RANGE(-0.0005, 0.0005);
+	float y_norm = (((float)y + FLOAT_RAND) / height_);// + FLOAT_RAND_RANGE(-0.0005, 0.0005);
+	float x_norm = (((float)x + FLOAT_RAND) / width_);// + FLOAT_RAND_RANGE(-0.0005, 0.0005);
 
-	V3 dir = upperleft_ + x_norm * horizontal_ - y_norm * vertical_ + position_;
+	V3 dir = upperleft_ + (x_norm * horizontal_) - (y_norm * vertical_) - position_;
+	dir.normalize();
 	Ray r = Ray(position_, dir);
 	return (const Ray)r;
 }
