@@ -32,13 +32,12 @@ class Camera {
 			V3 z = (lookat - pos).unitVector();
 			V3 y = up.unitVector();
 			V3 x = z.crossProduct(y);
-			float theta = fov * (M_PI / 180.0);
-			theta = theta / 2;
+			float theta = (fov * (M_PI / 180.0)) / 2;
 
 			this->position_ = pos;
 			this->vertical_ = 2 * tan(theta) * y;
 			this->horizontal_ = 2 * tan(theta) * ar * x;
-			this->upperleft_ = this->position_ + z + (this->vertical_) / 2 - (this->horizontal_ / 2);
+			this->upperleft_ = this->position_ + z + (this->vertical_ / 2) - (this->horizontal_ / 2);
 		}
 		Camera(uint32_t h, uint32_t w, V3 pos, V3 lookat, V3 up) {
 			float fov = 210.0; // field-of-view (in degrees)
@@ -47,8 +46,7 @@ class Camera {
 			V3 z = (lookat - pos).unitVector();
 			V3 y = up.unitVector();
 			V3 x = z.crossProduct(y);
-			float theta = fov * (M_PI / 180.0);
-			theta = theta / 2;
+			float theta = (fov * (M_PI / 180.0)) / 2;
 
 			this->position_ = pos;
 			this->vertical_ = 2 * tan(theta) * y;
@@ -59,8 +57,7 @@ class Camera {
 			V3 z = (lookat - pos).unitVector();
 			V3 y = up.unitVector();
 			V3 x = z.crossProduct(y);
-			float theta = fov * (M_PI / 180.0);
-			theta = theta / 2;
+			float theta = (fov * (M_PI / 180.0)) / 2;
 
 			this->position_ = pos;
 			this->vertical_ = 2 * tan(theta) * y;
