@@ -29,17 +29,12 @@ int main(int argc, char *argv[]) {
     //     std::cout << "./ray-tracer" << std::endl;
     // }
 
-	// scene Camera
-	//Camera camera = Camera();
-
-    // Origin of all the rays
-    V3 origin = V3(0,0,0);
-
-    // Point light in the space
-    //V3 pLight = V3(-2,2,1);
-
-    // View plane of pixels
-    V3 plane = V3(0,0,1);
+	// Image data
+	uint32_t height = 750, width = 1000;
+	//float unitHeight = 3, unitWidth = 4;
+	//float hHeight = unitHeight / 2.0, hWidth = unitWidth / 2.0;
+	//float iHeight = 1.0 / height, iWidth = 1.0 / width;
+	V3 **image = new V3*[height];
 
     //Add shapes into our space
     Shapelist shapes = Shapelist();
@@ -50,13 +45,17 @@ int main(int argc, char *argv[]) {
     //shapes.add(new Triangle(V3(-100,50,100), V3(100,50,100), V3(0,50,-100), new Specular(0.7, V3(.8, .8, .4)))); //fuzzy relfective ceiling
     shapes.add(new Triangle(V3(-100,-1,100), V3(100,-1,100), V3(0,-1,-100), new Diffuse(V3(.8,.5,.4)))); // floor
 
-    // Image data
-    uint32_t height = 750, width = 1000;
-    float unitHeight = 3, unitWidth = 4;
-    float hHeight = unitHeight / 2.0, hWidth = unitWidth / 2.0; 
-    float iHeight = 1.0 / height, iWidth = 1.0 / width;
+	// Point light in the space
+    //V3 pLight = V3(-2,2,1);
 
-    V3 **image = new V3*[height];
+	// scene Camera
+	Camera camera = Camera(height, width);
+	std::cout << camera << std::endl;
+
+	// Origin of all the rays
+	//V3 origin = V3(0,0,0);
+	// View plane of pixels
+	//V3 plane = V3(0,0,1);
 
     // init rand seed
     //srand(time(NULL));
@@ -78,11 +77,12 @@ int main(int argc, char *argv[]) {
             // Grab dir for the pixel
             V3 color = V3(0,0,0);
             for(int i=0; i < ANTI_ALIASING; i++) {
-                V3 dir = V3(plane.x() - hWidth + unitWidth * (x + 1) * iWidth + FLOAT_RAND * iWidth,
-                        plane.y() + hHeight - unitHeight * (y + 1) * iHeight - FLOAT_RAND * iHeight,
-                        plane.z() - origin.z()).unitVector();
+                //V3 dir = V3(plane.x() - hWidth + unitWidth * (x + 1) * iWidth + FLOAT_RAND * iWidth,
+                //        plane.y() + hHeight - unitHeight * (y + 1) * iHeight - FLOAT_RAND * iHeight,
+                //        plane.z() - origin.z()).unitVector();
 
-                Ray cast = Ray(origin, dir);
+				Ray cast = camera.get_ray(y, x);
+                //Ray cast = Ray(origin, dir);
                 color += getColor(cast, shapes, 0);
             }
             image[y][x] = color / ANTI_ALIASING;

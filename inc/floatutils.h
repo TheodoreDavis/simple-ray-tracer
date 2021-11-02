@@ -14,6 +14,7 @@
 #define FLOAT_ELESS(a, b) (!(FLOAT_GREATER(a, b)))
 
 #define FLOAT_RAND (rand()/(RAND_MAX+1.0))
+#define FLOAT_RAND_RANGE(min,max) (FLOAT_RAND * (max - min) + min)
 
 #define FLOAT_SQUARE(a) (a*a)
 
