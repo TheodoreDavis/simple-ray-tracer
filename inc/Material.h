@@ -87,17 +87,20 @@ class Glass : public Material {
 
         bool new_ray(const Ray &in, const HitRecord &r, V3 &color, Ray &out) const {
             color = this->color();
+            //if(FLOAT_NEQUAL(r.normal().magnitudeSquared(), 1.0f))
+                //std::cout << r.normal().magnitudeSquared() << std::endl;
 
             // Check if we're hiting a material with the same index of refraction
             // Assuming we're exiting the shape if the index are the same
-            V3 normal = r.normal();
+            V3 normal = -r.normal().unitVector();
+            V3 direction = in.dir().unitVector();
             float index = index_;
-            if(FLOAT_EQUAL(in.currIoR(), index)) {
-                normal *= -1;
+            if(FLOAT_GREATER(normal.dotProduct(direction), 0)) {
+                normal *= -1.0f;
                 index = 1.0f;
             }
 
-            float cosTheta = normal.dotProduct(-in.dir());
+            float cosTheta = normal.dotProduct(-direction);
             float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
             float ratio = in.currIoR() / index;
 
@@ -113,9 +116,10 @@ class Glass : public Material {
             }
             
             // Calculate new dir
-            V3 tperp = ratio * (in.dir() + cosTheta * normal);
+            V3 tperp = ratio * (direction + cosTheta * normal);
             V3 dir = tperp - sqrt(1.0 - tperp.magnitudeSquared()) * normal;
-            dir.normalize();
+            //dir.normalize();
+            //dir += tperp;
 
             out.ori() = r.point();
             out.dir() = dir;

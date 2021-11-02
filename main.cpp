@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     Shapelist shapes = Shapelist();
     shapes.add(new Sphere(V3(0,0,6), 1.0, new Diffuse(V3(.4, .5, .8))));
     shapes.add(new Sphere(V3(2,0,6), 1.0, new Specular(0.01, V3(.4, .8, .4))));
-    shapes.add(new Sphere(V3(-1,0,3), 1.0, new Glass(1.33, V3(.8, .3, .8))));
+    shapes.add(new Sphere(V3(-1,0.2,3), 1.0, new Glass(1.33, V3(1, 1, 1))));
     shapes.add(new Sphere(V3(0,5,5), 1.0, new Emitter(1, V3(1, 1, 1)))); //light
     //shapes.add(new Triangle(V3(-100,50,100), V3(100,50,100), V3(0,50,-100), new Specular(0.7, V3(.8, .8, .4)))); //fuzzy relfective ceiling
     shapes.add(new Triangle(V3(-100,-1,100), V3(100,-1,100), V3(0,-1,-100), new Diffuse(V3(.8,.5,.4)))); // floor
@@ -77,8 +77,6 @@ int main(int argc, char *argv[]) {
         for(uint32_t x = 0; x < width; x++) {
             // Grab dir for the pixel
             V3 color = V3(0,0,0);
-            if(x == 450 && y == 375)
-                std::cout << "hi" << std::endl;
             for(int i=0; i < ANTI_ALIASING; i++) {
                 V3 dir = V3(plane.x() - hWidth + unitWidth * (x + 1) * iWidth + FLOAT_RAND * iWidth,
                         plane.y() + hHeight - unitHeight * (y + 1) * iHeight - FLOAT_RAND * iHeight,
