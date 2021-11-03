@@ -22,18 +22,10 @@ V3 getColor(const Ray& r, const Shapelist& shapes, int depth);
 V3 pointInUnitCircle(const V3& center, float limit = 1.0f);
 
 int main(int argc, char *argv[]) {
-    // TODO if need user input
-    // if(argc < 2) {
-    //     std::cout << " An example use of this program is as follows:" << std::endl;
-    //     std::cout << "./ray-tracer" << std::endl;
-    // }
 
-	// Image data
-	uint32_t height = 750, width = 1000;
-	//float unitHeight = 3, unitWidth = 4;
-	//float hHeight = unitHeight / 2.0, hWidth = unitWidth / 2.0;
-	//float iHeight = 1.0 / height, iWidth = 1.0 / width;
-	V3 **image = new V3*[height];
+		// Image data
+		uint32_t height = 750, width = 1000;
+		V3 **image = new V3*[height];
 
     //Add shapes into our space
     Shapelist shapes = Shapelist();
@@ -44,21 +36,12 @@ int main(int argc, char *argv[]) {
     //shapes.add(new Triangle(V3(-100,50,100), V3(100,50,100), V3(0,50,-100), new Specular(0.7, V3(.8, .8, .4)))); //fuzzy relfective ceiling
     shapes.add(new Triangle(V3(-100,-1,100), V3(100,-1,100), V3(0,-1,-100), new Diffuse(V3(.8,.5,.4)))); // floor
 
-	// Point light in the space
-    //V3 pLight = V3(-2,2,1);
-
-	// scene Camera
-	Camera camera = Camera(height, width, V3(0,0,0), V3(0,0,1), V3(0,1,0));
-	std::cout << camera << std::endl;
-
-	// Origin of all the rays
-	//V3 origin = V3(0,0,0);
-	// View plane of pixels
-	//V3 plane = V3(0,0,1);
+		// scene Camera(image_height, image_width, position, dir_lookat, dir_up, fov, ar)
+		Camera camera = Camera(height, width, V3(0,0,0.5), V3(0,0,1), V3(0,1,0), 210, width/height);
+		std::cout << camera << std::endl;
 
     // init rand seed
-    //srand(time(NULL));
-    srand(7);
+    srand(time(NULL));
 
     float progPrev = 0;
     for(uint32_t y = 0; y < height; y++) {
@@ -76,12 +59,8 @@ int main(int argc, char *argv[]) {
             // Grab dir for the pixel
             V3 color = V3(0,0,0);
             for(int i=0; i < ANTI_ALIASING; i++) {
-                //V3 dir = V3(plane.x() - hWidth + unitWidth * (x + 1) * iWidth + FLOAT_RAND * iWidth,
-                //        plane.y() + hHeight - unitHeight * (y + 1) * iHeight - FLOAT_RAND * iHeight,
-                //        plane.z() - origin.z()).unitVector();
 
-				Ray cast = camera.get_ray(y, x);
-                //Ray cast = Ray(origin, dir);
+								Ray cast = camera.get_ray(y, x);
                 color += getColor(cast, shapes, 0);
             }
             image[y][x] = color / ANTI_ALIASING;
@@ -89,9 +68,9 @@ int main(int argc, char *argv[]) {
     }
     printf("image %3d%% - %d/%d lines - rendered\n", 100, height, height);
 
-	image_write_rgb("./out/output", image, height, width);
+		image_write_rgb("./out/output", image, height, width);
 
-	std::cout << "image wrote to file" << std::endl;
+		std::cout << "image wrote to file" << std::endl;
 
     //TODO - free shape memory
 
