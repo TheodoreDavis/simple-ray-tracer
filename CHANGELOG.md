@@ -1,3 +1,7 @@
+- 11/2/2021 -- 8:34pm
+	- sgriffen --
+		- Just look at the commit log, lol
+
 - 10/25/2021 -- 12:10am
 	- sgriffen --
 		- Added Camera.h class

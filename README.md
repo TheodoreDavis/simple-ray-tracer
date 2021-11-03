@@ -5,8 +5,8 @@ Sean Griffen    griffens
 Ray Tracer for ComS 336
 
 ## Project Description
-For our main demo scene, a pascal red triangle floor (y-aligned triangle) exists with a blue diffuse sphere and a specular reflective sphere on top of it.
-The blue sphere is centered in the image and slightly obscuring the left "corner" of the reflective sphere.
+For our main demo scene, there is a pascal red triangle floor (y-aligned triangle), a glass sphere with index of refraction 1.33 in front of a purple sphere, with a specular reflective green sphere next to those.
+
 The scene 1500px high by 2000px wide and is rendered with 4 samples per pixel, with a max recursive depth of 16 for each ray.
 
 ## How to use
@@ -14,6 +14,7 @@ The scene 1500px high by 2000px wide and is rendered with 4 samples per pixel, w
 ### Running demo
 Run the following commands in the top directory
 ```bash
+make subdirs
 make release
 ./release/ray-tracer
 ```
@@ -22,22 +23,21 @@ Once image rendering is complete, a message "image wrote to file" will print: th
 For this demo, the output image `output.ppm` will be placed in the `out` directory.
 
 ### Changing samples per pixel
-In src/ray-tracer.cpp, at line 13, there exists:
+In main.cpp, at line 15, there exists:
 ```
-#define MAX_DEPTH 16
+#define MAX_DEPTH 20
 ```
-This controls the maximum recursion depth of a ray. The default is 16.
+This controls the maximum recursion depth of a ray. The default is 20.
 
-Also in In src/ray-tracer.cpp, at line 14 there exists:
+Also in main.cpp, at line 16 there exists:
 ```
 #define ANTI_ALIASING 4
 ```
 This controls how many rays per pixel to cast. The default is 4.
 
 ### Addto/Change scene
-In src/ray-tracer.cpp starting at line 43 shapes are added to out shape list for the scene to render.
+In src/ray-tracer.cpp starting at line 32 shapes are added to out shape list for the scene to render.
 A shape can either be a sphere or a triangle and can be made diffuse, specular reflective, or glass-like materials.
-Example shapes with different properties than the default scene are commented out for reference.
 
 To create a sphere, call it's constructor ```Sphere(center, radius, material)``` where:
   - ```center``` is a vector defined as ```V3(x,y,z)``` where:
@@ -45,14 +45,22 @@ To create a sphere, call it's constructor ```Sphere(center, radius, material)```
     - ```y``` is a point in the scene on the y-axis
     - ```z``` is a point in the scene on the z-axis
   - ```radius``` is a floating point integer,
-  - ```material``` is the material of the sphere defined as ```Material(Property, effect, fuzz_index, color)``` where:
-    - ```Property``` is an enum class that can be can be ```Diffuse```, ```Specular```, or ```Glass```
-    - ```effect``` is a floating point integer that, if undefined, defaults to 0.0
-    - ```fuzz_index``` is a floating point integer that defines the fuzz factor of Specular Materials. If undefines, this defaults to 0.3
-    - ```color``` is a vector defined as ```V3(r,g,b)``` where:
-      - ```r``` is a float in the range [0,1] that defines the red component of the Material color
-      - ```g``` is a float in the range [0,1] that defines the green component of the Material color
-      - ```b``` is a float in the range [0,1] that defines the blue component of the Material color
+  - ```material``` is the material of the sphere defined as:
+
+    - ```Diffuse(color)``` where:
+      - ```color``` is a vector defined as ```V3(r,g,b)``` where:
+        - ```r``` is a float in the range [0,1] that defines the red component of the Material color
+        - ```g``` is a float in the range [0,1] that defines the green component of the Material color
+        - ```b``` is a float in the range [0,1] that defines the blue component of the Material color
+    - ```Specular(fuzz-factor, color)``` where:
+      - ```fuzz-factor``` is a floating point integer that defines the fuzz factor of Specular Material
+      - ```color``` is defined in the same way as ```color``` in Diffuse materials
+    - ```Glass(index-of-refraction, color)``` where:
+      - ```index-of-refraction``` is a floating point integer that defines the index of refraction for glass Materials
+      - ```color``` is the defined in the same way as ```color``` in Diffuse materials
+    - ```Emitter(brightness, color)``` where:
+      - ```brightness``` is how bright this light-emitting object is
+      - ```color``` is defined in the same was as ```color``` in Diffuse materials
 
 To create a Triangle, call it's constructor ```Triangle(a, b, c, material)``` where:
   - ```a``` is 1 of 3 points of the Triangle defined as ```V3(x,y,z)``` where:
@@ -64,6 +72,27 @@ To create a Triangle, call it's constructor ```Triangle(a, b, c, material)``` wh
   - ```material``` is defined similarly to a Sphere's ```material```
 
 ### Configuring Camera Location and View
-In src/ray-tracer.cpp line 34 ```V3 origin = V3(0,0,0)``` defines the origin of all rays casted into the scene
+In main.cpp, line 39 defines the camera in the scene.
+To create a Camera, call it's constructor ```Camera(h, w, pos, lookat, up, fov, ar)``` where:
+  - ```h``` is the height of the image
+  - ```w``` is the width of the image
+  - ```pos``` is the position of the camera in the scene defined as a vector ```V3(x,y,z)``` where:
+    - ```x``` is the 'x' coordinate in space of the camera
+    - ```y``` is the 'y' coordinate in space of the camera
+    - ```z``` is the 'z' coordinate in space of the camera
 
-In src/ray-tracer.cpp line 40 ```V3 plane = V3(0,0,1)``` defines the image plane to cast all rays to in the scene
+  If undefined, this defaults to ```V3(0,0,0)```
+
+  - ```lookat``` is the direction in the scene the camera is looking at, defined as a vector ```V3(x,y,z)``` where:
+    - ```x``` is the 'x' direction in space to look at
+    - ```y``` is the 'y' direction in space to look at
+    - ```z``` is the 'z' direction in space to look at
+
+  If undefined, this defaults to ```V3(0,0,1)```
+
+  - ```up``` is the upwards direction relative to the camera. This defines the camera's roll. ```up``` is defined as a vector``` V3(x,y,z)``` where:
+    - ```x``` is the 'x' direction of 'up' relative to the camera
+    - ```y``` is the 'y' direction of 'up' relative to the camera
+    - ```z``` is the 'z' direction of 'up' relative to the camera
+  - ```fov``` is a floating point integer that defines the field-of-view of the Camera in degrees. If undefined, this defaults to ```210 degrees```
+  - ```ar``` is a floating point integer that defines the aspect ratio of the camera. If undefined, this defaults to ```w/h```

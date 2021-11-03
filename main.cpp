@@ -33,7 +33,6 @@ int main(int argc, char *argv[]) {
     shapes.add(new Sphere(V3(2,0,6), 1.0, new Specular(0.01, V3(.4, .8, .4))));
     shapes.add(new Sphere(V3(-1,0.2,3), 1.0, new Glass(1.33, V3(1, 1, 1))));
     shapes.add(new Sphere(V3(0,5,5), 1.0, new Emitter(1, V3(1, 1, 1)))); //light
-    //shapes.add(new Triangle(V3(-100,50,100), V3(100,50,100), V3(0,50,-100), new Specular(0.7, V3(.8, .8, .4)))); //fuzzy relfective ceiling
     shapes.add(new Triangle(V3(-100,-1,100), V3(100,-1,100), V3(0,-1,-100), new Diffuse(V3(.8,.5,.4)))); // floor
 
 		// scene Camera(image_height, image_width, position, dir_lookat, dir_up, fov, ar)
